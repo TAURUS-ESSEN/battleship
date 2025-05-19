@@ -16,7 +16,7 @@ player1Board.placeShips(fleet);
         // console.log(direction)
 
 // console.log(player1Board.battlefield[1])
-// console.log([0,1,2,3,4,5,6,7,8])
+console.log ('          0    1    2    3    4    5    6    7    8    9 ')
 console.log('x0', player1Board.battlefield[0])
 console.log('x1',player1Board.battlefield[1])
 console.log('x2',player1Board.battlefield[2])

@@ -29,7 +29,7 @@ function startPointGenerator(battlefield, shiplength) {
     }
     else {
         console.log('занято, перезапуск')
-        startPointGenerator(battlefield); 
+        startPointGenerator(battlefield, shiplength); 
     }
 }
 
@@ -37,6 +37,7 @@ function checkBeforePlacement(x,y,shiplength, battlefield) {
     console.log('hi',x,y,shiplength)
     let lineDown = '-';
     let lineUp = '-';
+    let l = 0
     // let columnRight = '-';
     // let columnLeft = '-';
     // const direction = Math.floor(Math.random()*2);
@@ -44,51 +45,59 @@ function checkBeforePlacement(x,y,shiplength, battlefield) {
          // это горизонталь и пробуем направо.
         if (y+shiplength <= 10) {
             console.log('идем вправо по горизонтали');
-            let currentLine = battlefield[x].slice(y-1,y+shiplength+1).every(cell => cell === '-'); 
-            if (x!=9) {
-                lineDown = battlefield[x+1].slice(y-1,y+shiplength+1).every(cell => cell === '-');
+            let startY = Math.max(0, y - 1);
+            let endY = Math.min(10, y + shiplength + 1);
+
+            // let currentLine = battlefield[x].slice(y-1,y+shiplength+1).every(cell => cell === '-'); 
+            let currentLine = battlefield[x].slice(startY, endY).every(cell => cell === '-');
+            if (x < 9) {
+                // lineDown = battlefield[x+1].slice(y-1,y+shiplength+1).every(cell => cell === '-');
+                lineDown = battlefield[x + 1].slice(startY, endY).every(cell => cell === '-');
             }
             else { lineDown = true }
-            if (x!=0) {
-                lineUp = battlefield[x-1].slice(y-1,y+shiplength+1).every(cell => cell === '-');
+            if (x > 0) {
+                lineUp = battlefield[x - 1].slice(startY, endY).every(cell => cell === '-');
+                // lineUp = battlefield[x-1].slice(y-1,y+shiplength+1).every(cell => cell === '-');
             }
             else { lineUp = true }
             console.log('currentline',currentLine,'linedown',lineDown, 'lineUp', lineUp)
             if (currentLine && lineUp && lineDown) {
                 for (let i = 0; i< shiplength; i++){
                     battlefield[x][y+i] = '0';
-                    console.log(battlefield[x])
+                    // console.log(battlefield[x])
                 }
-                return console.log('корабль успешно добавлен')
+                l++;
+                return console.log('корабль успешно добавлен',l)
             }
             else {
-                startPointGenerator(battlefield, shiplength);
+                console.log('не получилось. перезапуск')
+                return startPointGenerator(battlefield, shiplength);
             }
         }
         if (y-shiplength >= 0)  {
+            let startY = Math.max(0, y - 1);
+            let endY = Math.min(10, y + shiplength + 1);
             console.log('идем влево')
-            // let currentLine = battlefield[x].slice(y-shiplength-1,y).every(cell => cell === '-');
-            // if (x!=9) {
-            //     // lineDown = battlefield[x+1].slice(y-1,y+shiplength+1).every(cell => cell === '-');
-            //     lineDown = battlefield[x+1].slice(y-shiplength-1,y).every(cell => cell === '-');
-            // }
-            // else { lineDown = true }
-            // if (x!=0) {
-            //     // lineUp = battlefield[x-1].slice(y-1,y+shiplength+1).every(cell => cell === '-');
-            //     lineUp = battlefield[x-1].slice(y-shiplength-1,y).every(cell => cell === '-');
-            // }
-            // else { lineUp = true }
-            // if (currentLine && lineUp && lineDown) {
-            //     for (let i = 0; i< shiplength; i++) {
-            //         battlefield[x][y] = 0;
-            //         y-=1;
-            //         console.log(battlefield[x])
-            //     }
-            //     return console.log('корабль успешно добавлен')
-            // }
-            // else {
-            //     startPointGenerator(battlefield, shiplength);
-            // }
+            let currentLine = battlefield[x].slice(startY, endY).every(cell => cell === '-');
+            if (x < 9) {
+                lineDown = battlefield[x+1].slice(startY, endY).every(cell => cell === '-');
+            }
+            else { lineDown = true }
+            if (x > 0) {
+                lineUp = battlefield[x-1].slice(startY, endY).every(cell => cell === '-');
+            }
+            else { lineUp = true }
+            if (currentLine && lineUp && lineDown) {
+                for (let i = 0; i< shiplength; i++) {
+                    battlefield[x][y-i] = '1';
+                }
+                l++;
+                return console.log('корабль успешно добавлен', l)
+            }
+            else {
+                console.log('ДЛИНА КОРАБЛЯ',shiplength)
+                return startPointGenerator(battlefield, shiplength);
+            }
         } 
     }
     // if (direction === 1) {
