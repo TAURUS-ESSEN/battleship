@@ -2,31 +2,27 @@
 export class Gameboard {
     constructor(name) {
         this.name = name;
-        this.battlefield = Array(10).fill(null).map(() => Array(10).fill(null));
+        this.battlefield = Array(10).fill('-').map(() => Array(10).fill('-'));
     }
     placeShips(fleet) {
         fleet.forEach(ship => {
             console.log('-----------------')
-        startPointGenerator(this.battlefield, ship.length)
-
+            startPointGenerator(this.battlefield, ship.length)
         })
         
     }
 
     checkGameOver() {
-
     } 
 
     receiveAttack(x, y) {
-
     }
 }
 function startPointGenerator(battlefield, shiplength) {
-    // console.log(battlefield)
     const x = Math.floor(Math.random()*10);
     const y = Math.floor(Math.random()*10);
     console.log('значение точки входа до фильтра = ', battlefield[x][y], 'координаты Array[',x,'][',y,']');
-    if (battlefield[x][y] === null) {
+    if (battlefield[x][y] === '-') {
         let startpunkt = {osX: x, osY: y };
         console.log('не занято', startpunkt)
         checkBeforePlacement(x,y,shiplength,battlefield)
@@ -39,76 +35,107 @@ function startPointGenerator(battlefield, shiplength) {
 
 function checkBeforePlacement(x,y,shiplength, battlefield) {
     console.log('hi',x,y,shiplength)
-    let lineDown = null;
-    let lineUp = null;
-    const direction = Math.floor(Math.random()*2);
-    if (direction===0) {        // это горизонталь и пробуем направо.
+    let lineDown = '-';
+    let lineUp = '-';
+    // let columnRight = '-';
+    // let columnLeft = '-';
+    // const direction = Math.floor(Math.random()*2);
+    // if (direction===0) {       
+         // это горизонталь и пробуем направо.
         if (y+shiplength <= 10) {
-
-            console.log('идем вправо');
-            let currentLine = battlefield[x].slice(y-1,y+shiplength+1).every(cell => cell === null);
+            console.log('идем вправо по горизонтали');
+            let currentLine = battlefield[x].slice(y-1,y+shiplength+1).every(cell => cell === '-'); 
             if (x!=9) {
-                lineDown = battlefield[x+1].slice(y-1,y+shiplength+1).every(cell => cell === null);
+                lineDown = battlefield[x+1].slice(y-1,y+shiplength+1).every(cell => cell === '-');
             }
-            else {  lineDown = true }
+            else { lineDown = true }
             if (x!=0) {
-                lineUp = battlefield[x-1].slice(y-1,y+shiplength+1).every(cell => cell === null);
+                lineUp = battlefield[x-1].slice(y-1,y+shiplength+1).every(cell => cell === '-');
             }
-            else {  lineUp = true }
+            else { lineUp = true }
+            console.log('currentline',currentLine,'linedown',lineDown, 'lineUp', lineUp)
             if (currentLine && lineUp && lineDown) {
                 for (let i = 0; i< shiplength; i++){
-                    battlefield[x][y] = 0;
-                    y+=1;
+                    battlefield[x][y+i] = '0';
                     console.log(battlefield[x])
                 }
                 return console.log('корабль успешно добавлен')
             }
             else {
-                checkBeforePlacement(x,y,shiplength, battlefield) 
+                startPointGenerator(battlefield, shiplength);
             }
         }
         if (y-shiplength >= 0)  {
             console.log('идем влево')
-            let currentLine = battlefield[x].slice(y-shiplength,y).every(cell => cell === null);
-            if (x!=9) {
-                lineDown = battlefield[x+1].slice(y-1,y+shiplength+1).every(cell => cell === null);
-            }
-            else {  lineDown = true }
-            if (x!=0) {
-                lineUp = battlefield[x-1].slice(y-1,y+shiplength+1).every(cell => cell === null);
-            }
-            else {  lineUp = true }
-            if (currentLine && lineUp && lineDown) {
-                for (let i = 0; i< shiplength; i++){
-                    battlefield[x][y] = 0;
-                    y-=1;
-                    console.log(battlefield[x])
-                }
-                return console.log('корабль успешно добавлен')
-            }
-            else {
-                     
-                checkBeforePlacement(x,y,shiplength, battlefield) 
-            
-            }
-
-        } else {
-            console.log('тут будет попытка либо проверить вертикаль либо перезапуск вообще этой функции');
-        }
+            // let currentLine = battlefield[x].slice(y-shiplength-1,y).every(cell => cell === '-');
+            // if (x!=9) {
+            //     // lineDown = battlefield[x+1].slice(y-1,y+shiplength+1).every(cell => cell === '-');
+            //     lineDown = battlefield[x+1].slice(y-shiplength-1,y).every(cell => cell === '-');
+            // }
+            // else { lineDown = true }
+            // if (x!=0) {
+            //     // lineUp = battlefield[x-1].slice(y-1,y+shiplength+1).every(cell => cell === '-');
+            //     lineUp = battlefield[x-1].slice(y-shiplength-1,y).every(cell => cell === '-');
+            // }
+            // else { lineUp = true }
+            // if (currentLine && lineUp && lineDown) {
+            //     for (let i = 0; i< shiplength; i++) {
+            //         battlefield[x][y] = 0;
+            //         y-=1;
+            //         console.log(battlefield[x])
+            //     }
+            //     return console.log('корабль успешно добавлен')
+            // }
+            // else {
+            //     startPointGenerator(battlefield, shiplength);
+            // }
+        } 
     }
-    if (direction === 1) {
-        console.log('делаем все для вертикали')
-    //     console.log('ось X',battlefield[x])
-    //     if (x+shiplength <= 10) {
-    //         // идем вниз по вертикали
-    //         console.log('идем вниз')
+    // if (direction === 1) {
+    //     console.log('делаем все для вертикали')
+        // if (x+shiplength <= 10) {
+        //     console.log('идем вниз')
+        //     let test = battlefield.slice(x,x+shiplength+1);
+        //     let currentColumn = test.every(array => array[y] === '-') 
+        //     if (y!=9) {
+        //         columnRight = test.every(array => array[y+1] === '-') 
+        //     }
+        //     else {  columnRight = true }
+        //     if (y!=0) {
+        //         columnLeft = test.every(array => array[y-1] === '-') 
+        //     }
+        //     else {  columnLeft = true }
+        //     if (currentColumn && columnRight && columnLeft) {
+        //         for (let i = 0; i< shiplength; i++){
+        //             battlefield[x][y] = 0;
+        //             x+=1;
+        //         }
+        //         return (console.log('корабль вниз добавлен'))
+        //     }
+        // }
+        // if (x-shiplength >= 0) {
+        //     console.log('идем вверх')
+        //     let test = battlefield.slice(x - shiplength + 1, x + 1);
+        //     let currentColumn = test.every(array => array[y] === '-') 
+        //     if (y!=9) {
+        //         columnRight = test.every(array => array[y+1] === '-') 
+        //     }
+        //     else {  columnRight = true }
+        //     if (y!=0) {
+        //         columnLeft = test.every(array => array[y-1] === '-') 
+        //     }
+        //     else {  columnLeft = true }
+        //     if (currentColumn && columnRight && columnLeft) {
+        //         for (let i = 0; i< shiplength; i++){
+        //             battlefield[x][y] = 0;
+        //             x-=1;
+        //         }
+        //         return (console.log('корабль вверх добавлен'))
+        //     }
+        // }
+        // else {
+        //     startPointGenerator(battlefield, shiplength);
+        // }
 
-    //     }
-    //     if (x-shiplength >= 0) {
-    //         // идем вниз по вертикали
-    //         console.log('идем вверх')
-
-    //     }
-
-    }
-}
+    // }
+// }
