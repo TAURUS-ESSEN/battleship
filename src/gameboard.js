@@ -13,9 +13,16 @@ export class Gameboard {
     }
 
     checkGameOver() {
+        if (this.battlefield.filter(arr=> arr.some(value=> value === '0')).length === 0) {
+            return 'gameover'
+        }
+        else {
+            return 'no'
+        }
     } 
 
     receiveAttack(x, y) {
+        return this.battlefield[x][y] = this.battlefield[x][y] === '0' ? 'X' : 'M';
     }
 }
 function startPointGenerator(battlefield, shiplength) {
@@ -60,7 +67,7 @@ function checkBeforePlacement(x,y,shiplength, battlefield) {
             const lineUp = x > 0 ? battlefield[x-1].slice(startY, endY).every(cell => cell === '-') : true;
             if (currentLine && lineUp && lineDown) {
                 for (let i = 0; i < shiplength; i++) {
-                    battlefield[x][y - i] = '1';
+                    battlefield[x][y - i] = '0';
                 }
                 return console.log('корабль влево успешно добавлен')
             }
@@ -79,7 +86,7 @@ function checkBeforePlacement(x,y,shiplength, battlefield) {
             const columnLeft = y > 0 ? test.every(array => array[y - 1] === '-') : true 
             if (currentColumn && columnLeft && columnRight) {
                 for (let i = 0; i < shiplength; i++){
-                    battlefield[x + i][y] = '2';
+                    battlefield[x + i][y] = '0';
                 }
                 return (console.log('корабль вниз добавлен'))
             }
@@ -96,7 +103,7 @@ function checkBeforePlacement(x,y,shiplength, battlefield) {
             const columnLeft = y > 0 ? test.every(array => array[y - 1] === '-') : true; 
             if (currentColumn && columnLeft && columnRight) {
                 for (let i = 0; i < shiplength; i++){
-                    battlefield[x - i][y] = '3';
+                    battlefield[x - i][y] = '0';
                 }
                 return (console.log('корабль вверх добавлен'))
             }
@@ -106,3 +113,5 @@ function checkBeforePlacement(x,y,shiplength, battlefield) {
         }
     }
 } 
+
+

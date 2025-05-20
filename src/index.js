@@ -13,6 +13,7 @@ const player1Board = new Gameboard("player1GameBoard");
 const player2Board = new Gameboard("player2GameBoard");
 player1Board.placeShips(fleet);
 player2Board.placeShips(fleet);
+// player1Board.checkGameOver()
 
 console.log ('          0    1    2    3    4    5    6    7    8    9 ')
 console.log('x0', player1Board.battlefield[0])
@@ -25,3 +26,4 @@ console.log('x6',player1Board.battlefield[6])
 console.log('x7',player1Board.battlefield[7])
 console.log('x8',player1Board.battlefield[8])
 console.log('x9',player1Board.battlefield[9])
+

@@ -1,4 +1,5 @@
 import { Ship } from '../ship.js';
+import { Gameboard } from '../gameboard.js';
 
 test('ship takes a hit', () => {
   const ship = new Ship('crusader', 3);
@@ -25,4 +26,36 @@ test('cannot hit more than ship length', () => {
   ship.hit();
 
   expect(() => ship.hit()).toThrow("Ship has already been sunk.");
+});
+
+test('ship recieve Attack', () => {
+  const gameboard3 = new Gameboard('test');
+  gameboard3.battlefield[4][5] = '0';
+  expect(gameboard3.receiveAttack(4, 5)).toBe('X');
+});
+
+test('ship NOT recieve Attack', () => {
+  const gameboard3 = new Gameboard('test');
+  gameboard3.battlefield[4][5] = '0';
+  expect(gameboard3.receiveAttack(6, 5)).toBe('M');
+});
+
+
+test('check gamover', () => {
+  const gameboard3 = new Gameboard('test2');
+  gameboard3.battlefield[4][5] = '0';
+  gameboard3.battlefield[4][6] = '0';
+  gameboard3.battlefield[4][7] = '0';
+  expect(gameboard3.checkGameOver()).toBe('no');
+});
+
+test('check gamover2', () => {
+  const gameboard3 = new Gameboard('test2');
+  gameboard3.battlefield[4][5] = '0';
+  gameboard3.battlefield[4][6] = '0';
+  gameboard3.battlefield[4][7] = '0';
+  gameboard3.receiveAttack(4, 5)
+  gameboard3.receiveAttack(4, 6)
+  gameboard3.receiveAttack(4, 7)
+  expect(gameboard3.checkGameOver()).toBe('gameover');
 });
