@@ -120,10 +120,13 @@ function checkBeforePlacement(x,y,shiplength, battlefield) {
         }
         else { 
             console.log('идем вверх')
-            let startX = Math.max(10, x + 1);
-            let endX = Math.min(0, x - shiplength - 1);
+            // let startX = Math.max(10, x + 1);
+            // let endX = Math.min(0, x - shiplength - 1);
             // let test = battlefield.slice(startX, endX);
-            let test = battlefield.slice(endX, startX);
+            // let test = battlefield.slice(endX, startX);
+                let startX = Math.max(0, x - shiplength - 1);  // немного выше
+    let endX = x + 1;                              // до самой клетки x включительно
+    let test = battlefield.slice(startX, endX);    // срез по вертикали
             let currentColumn = test.every(array => array[y] === '-') 
             if (y < 9) {
                 columnRight = test.every(array => array[y+1] === '-') 
