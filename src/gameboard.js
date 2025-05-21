@@ -13,26 +13,11 @@ export class Gameboard {
         
     }
 
-    // checkGameOver() {
-    //     // ищем хоть один объект Ship на поле
-    // const hasLiveShip = this.battlefield.some(row =>
-    //     row.some(cell => typeof cell === 'object' && cell !== null)
-    // );
-
-    // if (!hasLiveShip) {
-    //     console.log('gameover');
-    //     return 'gameover';
-    // } else {
-    //     console.log('no');
-    //     return 'no';
-    // }
-    // } 
-
     checkGameOver() {
         const notAllSunk = this.fleet.some(ship=> ship.sunk===false);
         console.log('notAllSunk=',notAllSunk)
         if (!notAllSunk) {
-             return 'gameover'
+            return 'gameover'
         }
         console.log("еще не все потонули")
     } 
@@ -50,17 +35,15 @@ export class Gameboard {
             console.log('ship.type', ship.type)
             ship.hit();
             ship.isSunk();
-            this.checkGameOver();
+            // this.checkGameOver();
             console.log('ship type=',ship.type,'ship.hits=', ship.hits, 'sunk=',ship.sunk)
             return this.battlefield[x][y] = 'X';
         }
-        // return this.battlefield[x][y] = this.battlefield[x][y] === '0' ? 'X' : 'M';
     }
 }
 function startPointGenerator(battlefield, ship) {
     const x = Math.floor(Math.random()*10);
     const y = Math.floor(Math.random()*10);
-    // console.log('значение точки входа до фильтра = ', battlefield[x][y], 'координаты Array[',x,'][',y,']');
     if (battlefield[x][y] === '-') {
         let startpunkt = {osX: x, osY: y };
         console.log('не занято', startpunkt)
@@ -73,7 +56,6 @@ function startPointGenerator(battlefield, ship) {
 }
 
 function checkBeforePlacement(x,y,ship, battlefield) {
-    
     const direction = Math.floor(Math.random() * 2);
     if (direction === 0) {       
         if (y + ship.length <= 10) {
@@ -146,5 +128,3 @@ function checkBeforePlacement(x,y,ship, battlefield) {
         }
     }
 } 
-
-
