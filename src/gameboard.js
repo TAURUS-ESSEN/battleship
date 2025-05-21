@@ -5,6 +5,7 @@ export class Gameboard {
         this.battlefield = Array(10).fill('-').map(() => Array(10).fill('-'));
     }
     placeShips(fleet) {
+        this.fleet = fleet
         fleet.forEach(ship => {
             console.log('-----------------')
             startPointGenerator(this.battlefield, ship)
@@ -12,19 +13,23 @@ export class Gameboard {
         
     }
 
-    checkGameOver() {
-        // ищем хоть один объект Ship на поле
-    const hasLiveShip = this.battlefield.some(row =>
-        row.some(cell => typeof cell === 'object' && cell !== null)
-    );
+    // checkGameOver() {
+    //     // ищем хоть один объект Ship на поле
+    // const hasLiveShip = this.battlefield.some(row =>
+    //     row.some(cell => typeof cell === 'object' && cell !== null)
+    // );
 
-    if (!hasLiveShip) {
-        console.log('gameover');
-        return 'gameover';
-    } else {
-        console.log('no');
-        return 'no';
-    }
+    // if (!hasLiveShip) {
+    //     console.log('gameover');
+    //     return 'gameover';
+    // } else {
+    //     console.log('no');
+    //     return 'no';
+    // }
+    // } 
+
+    checkGameOver() {
+        // this
     } 
 
     receiveAttack(x, y) {
@@ -60,6 +65,7 @@ function startPointGenerator(battlefield, ship) {
 }
 
 function checkBeforePlacement(x,y,ship, battlefield) {
+    
     const direction = Math.floor(Math.random() * 2);
     if (direction === 0) {       
         if (y + ship.length <= 10) {

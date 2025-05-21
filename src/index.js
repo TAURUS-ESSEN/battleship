@@ -16,8 +16,10 @@ player1Board.placeShips(fleet);
 player2Board.placeShips(fleet);
 export const player1 = new Player('Eugen', player1Board, player2Board);
 export  const player2 = new Player('Mister X', player2Board, player1Board);
-console.log(player1);
-console.log(player2);
+// console.log(player1);
+// console.log(player2);
+// console.log(player1Board)
+// console.log(player2Board)
 let counter = 0;
 
 function whoIsFirst() {
