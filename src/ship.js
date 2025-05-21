@@ -6,7 +6,9 @@ export class Ship {
         this.length = length;
         this.hits = 0;
         this.sunk = false;
+        this.coordinates = [];
     }
+    
     hit() {
         if (this.hits < this.length) {
             return ++this.hits;

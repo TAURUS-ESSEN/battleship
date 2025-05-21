@@ -20,14 +20,23 @@ const player2Board = new Gameboard("player2GameBoard");
 player1Board.placeShips(fleet1);
 player2Board.placeShips(fleet2);
 export const player1 = new Player('Eugen', player1Board, player2Board);
-export  const player2 = new Player('Mister X', player2Board, player1Board);
+export const player2 = new Player('Mister X', player2Board, player1Board);
 let counter = 0;
 
 function whoIsFirst() {
-    let firstTurn = Math.floor(Math.random()*2+1)
+    let firstTurn = Math.floor(Math.random()*2+1);
     let currentPlayer = firstTurn === 1 ? player1 : player2;
-    startGame(currentPlayer)
+    startGame(currentPlayer);
 }
+
+// console.log(fleet1[0].coordinates[0])
+// console.log(fleet1[0].coordinates[1])
+// console.log(fleet1[0].coordinates[2])
+// console.log(fleet2[0].coordinates[3])
+// console.log(fleet2[1].coordinates[0])
+// console.log(fleet2[1].coordinates[1])
+// console.log(fleet2[1].coordinates[2])
+// console.log(fleet2[1].coordinates[3])
 
 whoIsFirst();
 
@@ -55,19 +64,19 @@ function startGame(player) {
 
 function checkEnemyField(currentPlayer) {
     let x = Math.floor(Math.random()*10);
-    if (!currentPlayer.enemyBoard.battlefield[x].some(value => (value !== 'X') || (value !=='M'))) {
+    if (!currentPlayer.enemyBoard.battlefield[x].some(value => (value !== 'X') && (value !=='M') && (value !== 'B'))) {
         console.log('строка уже забита \ отстреляна');
         return checkEnemyField(currentPlayer)
     }
     let y = Math.floor(Math.random()*10);
-    if ((currentPlayer.enemyBoard.battlefield[x][y]==='X') || (currentPlayer.enemyBoard.battlefield[x][y]==='M')) {
+    if ((currentPlayer.enemyBoard.battlefield[x][y]==='X') || (currentPlayer.enemyBoard.battlefield[x][y]==='M') || (currentPlayer.enemyBoard.battlefield[x][y]==='B')) {
         console.log(`ячейка ${x}${y} уже занята там стоит =`,currentPlayer.enemyBoard.battlefield[x][y])
         return checkEnemyField(currentPlayer)
     }
     let coordinate = [x,y]; 
     return coordinate
 }
-
+//   draw()
 function draw() {
 console.log (' EUGEN    0    1    2    3    4    5    6    7    8    9 ')
 console.log('x0', player1Board.battlefield[0])

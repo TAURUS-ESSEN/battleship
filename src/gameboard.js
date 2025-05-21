@@ -1,4 +1,7 @@
 'use strict';
+
+import {Player} from './player.js';
+
 export class Gameboard {
     constructor(name) {
         this.name = name;
@@ -34,11 +37,33 @@ export class Gameboard {
             let ship = this.battlefield[x][y]
             console.log('ship.type', ship.type)
             ship.hit();
-            ship.isSunk();
+            // ship.isSunk();
+            let istSunk = ship.isSunk();
+            if (istSunk) {
+                this.blockSurroundingCells(ship);
+            }
             // this.checkGameOver();
             console.log('ship type=',ship.type,'ship.hits=', ship.hits, 'sunk=',ship.sunk)
             return this.battlefield[x][y] = 'X';
         }
+    }
+
+    blockSurroundingCells(ship) {
+        console.log(`ship=${ship.type}, ship.sunk = ${ship.sunk}, ship.coordinates = ${ship.coordinates}`);
+        ship.coordinates.forEach(arr => {
+            let [x,y] = arr
+            console.log('Проверка доступа', this.battlefield[x][y]) 
+            console.log(`BLOCK x=${x}, y=${y}, arr=${arr}`)
+            if (x + 1 < 10 && this.battlefield[x + 1][y] === '-') this.battlefield[x + 1][y] = 'B';
+            if (x - 1 >= 0 && this.battlefield[x - 1][y] === '-') this.battlefield[x - 1][y] = 'B';
+            if (y - 1 >= 0 && this.battlefield[x][y-1] === '-') this.battlefield[x][y-1] = 'B';
+            if (y + 1 < 10 && this.battlefield[x][y+1] === '-') this.battlefield[x][y+1] = 'B';
+            //теперь диагонали
+            if (x - 1 >= 0 && y-1 >=0  && this.battlefield[x - 1][y - 1] === '-') this.battlefield[x - 1][y-1] = 'B';
+            if (x + 1 < 10 && y-1 >=0  && this.battlefield[x + 1][y - 1] === '-') this.battlefield[x + 1][y-1] = 'B';
+            if (x - 1 >= 0 && y+1 <10  && this.battlefield[x - 1][y + 1] === '-') this.battlefield[x - 1][y+1] = 'B';
+            if (x + 1 < 10 && y+1 <10  && this.battlefield[x + 1][y + 1] === '-') this.battlefield[x + 1][y+1] = 'B';
+        })
     }
 }
 function startPointGenerator(battlefield, ship) {
@@ -56,6 +81,7 @@ function startPointGenerator(battlefield, ship) {
 }
 
 function checkBeforePlacement(x,y,ship, battlefield) {
+    ship.coordinates = [];
     const direction = Math.floor(Math.random() * 2);
     if (direction === 0) {       
         if (y + ship.length <= 10) {
@@ -67,6 +93,7 @@ function checkBeforePlacement(x,y,ship, battlefield) {
             if (currentLine && lineUp && lineDown) {
                 for (let i = 0; i < ship.length; i++){
                     battlefield[x][y + i] = ship;
+                    ship.coordinates.push([x,y + i])
                 }
                 return console.log('корабль вправо успешно добавлен')
             }
@@ -83,6 +110,7 @@ function checkBeforePlacement(x,y,ship, battlefield) {
             if (currentLine && lineUp && lineDown) {
                 for (let i = 0; i < ship.length; i++) {
                     battlefield[x][y - i] = ship;
+                    ship.coordinates.push([x,y - i])
                 }
                 return console.log('корабль влево успешно добавлен')
             }
@@ -102,6 +130,7 @@ function checkBeforePlacement(x,y,ship, battlefield) {
             if (currentColumn && columnLeft && columnRight) {
                 for (let i = 0; i < ship.length; i++){
                     battlefield[x + i][y] = ship;
+                    ship.coordinates.push([x + i,y])
                 }
                 return (console.log('корабль вниз добавлен'))
             }
@@ -119,6 +148,7 @@ function checkBeforePlacement(x,y,ship, battlefield) {
             if (currentColumn && columnLeft && columnRight) {
                 for (let i = 0; i < ship.length; i++){
                     battlefield[x - i][y] = ship;
+                    ship.coordinates.push([x - i,y])
                 }
                 return (console.log('корабль вверх добавлен'))
             }
