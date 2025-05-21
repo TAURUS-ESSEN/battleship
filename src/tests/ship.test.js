@@ -49,21 +49,34 @@ test('attack enemy', () => {
   expect(player2Board.battlefield[5][5]).toBe('M')
 })
 
-    // test('check gamover', () => {
-    //   const gameboard3 = new Gameboard('test2');
-    //   gameboard3.battlefield[4][5] = '0';
-    //   gameboard3.battlefield[4][6] = '0';
-    //   gameboard3.battlefield[4][7] = '0';
-    //   expect(gameboard3.checkGameOver()).toBe('no');
-    // });
+    test('check gamover', () => {
+      const linkor = new Ship("linkor",4);
+      const crusader1 = new Ship("crusader1",3);
+      const fleet = [linkor, crusader1];
+      const gameboard5 = new Gameboard("player5GameBoard");
+      gameboard5.placeShips(fleet);
+      expect(gameboard5.checkGameOver()).toBe(true);
+    });
 
-// test('check gamover2', () => {
-//   const gameboard3 = new Gameboard('test2');
-//   gameboard3.battlefield[4][5] = '0';
-//   gameboard3.battlefield[4][6] = '0';
-//   gameboard3.battlefield[4][7] = '0';
-//   gameboard3.receiveAttack(4, 5)
-//   gameboard3.receiveAttack(4, 6)
-//   gameboard3.receiveAttack(4, 7)
-//   expect(gameboard3.checkGameOver()).toBe('gameover');
-// });
+        test('check gamover#2', () => {
+      const linkor = new Ship("linkor",4);
+      const crusader1 = new Ship("crusader1",3);
+      const fleet = [linkor, crusader1];
+      fleet[0].sunk =true;
+      fleet[1].sunk =true;
+      const gameboard5 = new Gameboard("player5GameBoard");
+      gameboard5.placeShips(fleet);
+      expect(gameboard5.checkGameOver()).toBe(false);
+    });
+
+      test('check gamover#3', () => {
+      const linkor = new Ship("linkor",4);
+      const crusader1 = new Ship("crusader1",3);
+      const fleet = [linkor, crusader1];
+      fleet[0].sunk =true;
+      fleet[1].sunk =false;
+      const gameboard5 = new Gameboard("player5GameBoard");
+      gameboard5.placeShips(fleet);
+      expect(gameboard5.checkGameOver()).toBe(true);
+    });
+ 

@@ -29,17 +29,25 @@ export class Gameboard {
     // } 
 
     checkGameOver() {
-        // this
+        const notAllSunk = this.fleet.some(ship=> ship.sunk===false);
+        console.log('notAllSunk=',notAllSunk)
+        if (!notAllSunk) {
+             return 'gameover'
+        }
+        console.log("еще не все потонули")
     } 
 
     receiveAttack(x, y) {
+        console.log(`получен выстрел ${x}${y}`)
+        console.log(`this.battlefield[x][y] = ${this.battlefield[x][y]} `)
         if (this.battlefield[x][y] === '-')
         {
             return this.battlefield[x][y] = 'M';
         }
         else {
-            console.log(this.battlefield[x][y])
+            console.log('ПОПАЛИ',this.battlefield[x][y])
             let ship = this.battlefield[x][y]
+            console.log('ship.type', ship.type)
             ship.hit();
             ship.isSunk();
             this.checkGameOver();
