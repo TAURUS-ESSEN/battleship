@@ -13,15 +13,34 @@ export class Gameboard {
     }
 
     checkGameOver() {
-        // if (this.battlefield.filter(arr=> arr.some(value=> value !== '-')).length === 0) {
-            // return 'gameover'
-        // }
-        // else {
-            // return 'no'
-        // }
+        // ищем хоть один объект Ship на поле
+    const hasLiveShip = this.battlefield.some(row =>
+        row.some(cell => typeof cell === 'object' && cell !== null)
+    );
+
+    if (!hasLiveShip) {
+        console.log('gameover');
+        return 'gameover';
+    } else {
+        console.log('no');
+        return 'no';
+    }
     } 
 
     receiveAttack(x, y) {
+        if (this.battlefield[x][y] === '-')
+        {
+            return this.battlefield[x][y] = 'M';
+        }
+        else {
+            console.log(this.battlefield[x][y])
+            let ship = this.battlefield[x][y]
+            ship.hit();
+            ship.isSunk();
+            this.checkGameOver();
+            console.log('ship type=',ship.type,'ship.hits=', ship.hits, 'sunk=',ship.sunk)
+            return this.battlefield[x][y] = 'X';
+        }
         // return this.battlefield[x][y] = this.battlefield[x][y] === '0' ? 'X' : 'M';
     }
 }
