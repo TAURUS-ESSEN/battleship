@@ -38,14 +38,22 @@ function whoIsFirst(game) {
 function startGame(game) {
     // let currentPlayer = game.currentPlayer;
     console.log('Ход игрока - ', game.currentPlayer.name)
-    let attackPoint = checkEnemyField(game.currentPlayer);
-    let attackResult = game.currentPlayer.attack(attackPoint);
-    console.log('Результат стрельбы =', attackResult)
+    let attackResult = '';
+    if (game.currentPlayer.enemyWounded === 'l;') {
+        console.log('стрельба по заданным координатам будет тут')
+        attackResult = game.currentPlayer.killWounded();
+    }
+    else {
+        let attackPoint = checkEnemyField(game.currentPlayer);
+        attackResult = game.currentPlayer.attack(attackPoint);
+        console.log('Результат стрельбы =', attackResult)
+    }
     if (attackResult === 'X')
         {
+        game.currentPlayer.enemyWounded = true;
+        console.log("game.currentPlayer",game.currentPlayer)
         if (game.currentPlayer.enemyBoard.checkGameOver() === 'gameover') {
-            let looser =  game.currentPlayer === game.player2 ? game.player1 : game.player2;
-            return console.log(`gameover - ${looser.name} is lose` )
+            return console.log(`gameover - ${game.currentPlayer.name} is win` )
         }
             // сделать тут логику добивания.
             console.log('повторый ход!')

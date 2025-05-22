@@ -1,7 +1,4 @@
 'use strict';
-
-// import {Player} from './player.js';
-
 export class Gameboard {
     constructor(name) {
         this.name = name;
@@ -10,7 +7,6 @@ export class Gameboard {
     placeShips(fleet) {
         this.fleet = fleet
         fleet.forEach(ship => {
-            console.log('-----------------')
             startPointGenerator(this.battlefield, ship)
         })
         
@@ -22,12 +18,12 @@ export class Gameboard {
         if (!notAllSunk) {
             return 'gameover'
         }
-        console.log("еще не все потонули")
+        console.log("еще есть корабли на плаву")
     } 
 
     receiveAttack(x, y) {
-        console.log(`получен выстрел ${x}${y}`)
-        console.log(`this.battlefield[x][y] = ${this.battlefield[x][y]} `)
+        console.log(`получен выстрел по ${x}.${y}`)
+        console.log(`в этой клетке было = ${this.battlefield[x][y]} `)
         if (this.battlefield[x][y] === '-')
         {
             return this.battlefield[x][y] = 'M';
