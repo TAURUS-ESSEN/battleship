@@ -1,6 +1,6 @@
 'use strict';
 
-import {Player} from './player.js';
+// import {Player} from './player.js';
 
 export class Gameboard {
     constructor(name) {
@@ -37,7 +37,6 @@ export class Gameboard {
             let ship = this.battlefield[x][y]
             console.log('ship.type', ship.type)
             ship.hit();
-            // ship.isSunk();
             let istSunk = ship.isSunk();
             if (istSunk) {
                 this.blockSurroundingCells(ship);
