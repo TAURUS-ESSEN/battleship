@@ -18,26 +18,23 @@ export class Gameboard {
         if (!notAllSunk) {
             return 'gameover'
         }
-        console.log("еще есть корабли на плаву")
+        // console.log("еще есть корабли на плаву")
     } 
 
     receiveAttack(x, y) {
-        console.log(`получен выстрел по ${x}.${y}`)
-        console.log(`в этой клетке было = ${this.battlefield[x][y]} `)
+        console.log(`получен выстрел по ${x}.${y} в этой клетке было = ${this.battlefield[x][y]} `)
         if (this.battlefield[x][y] === '-')
         {
             return this.battlefield[x][y] = 'M';
         }
         else {
-            console.log('ПОПАЛИ',this.battlefield[x][y])
             let ship = this.battlefield[x][y]
-            console.log('ship.type', ship.type)
+            console.log('ПОПАЛИ',this.battlefield[x][y], 'ship.type', ship.type)
             ship.hit();
             let istSunk = ship.isSunk();
             if (istSunk) {
                 this.blockSurroundingCells(ship);
             }
-            // this.checkGameOver();
             console.log('ship type=',ship.type,'ship.hits=', ship.hits, 'sunk=',ship.sunk)
             return this.battlefield[x][y] = 'X';
         }
@@ -47,8 +44,8 @@ export class Gameboard {
         console.log(`ship=${ship.type}, ship.sunk = ${ship.sunk}, ship.coordinates = ${ship.coordinates}`);
         ship.coordinates.forEach(arr => {
             let [x,y] = arr
-            console.log('Проверка доступа', this.battlefield[x][y]) 
-            console.log(`BLOCK x=${x}, y=${y}, arr=${arr}`)
+            // console.log('Проверка доступа', this.battlefield[x][y]) 
+            // console.log(`BLOCK x=${x}, y=${y}, arr=${arr}`)
             if (x + 1 < 10 && this.battlefield[x + 1][y] === '-') this.battlefield[x + 1][y] = 'B';
             if (x - 1 >= 0 && this.battlefield[x - 1][y] === '-') this.battlefield[x - 1][y] = 'B';
             if (y - 1 >= 0 && this.battlefield[x][y-1] === '-') this.battlefield[x][y-1] = 'B';
@@ -65,12 +62,12 @@ function startPointGenerator(battlefield, ship) {
     const x = Math.floor(Math.random()*10);
     const y = Math.floor(Math.random()*10);
     if (battlefield[x][y] === '-') {
-        let startpunkt = {osX: x, osY: y };
-        console.log('не занято', startpunkt)
+        // let startpunkt = {osX: x, osY: y };
+        // console.log('не занято', startpunkt)
         checkBeforePlacement(x,y,ship,battlefield)
     }
     else {
-        console.log('занято, перезапуск')
+        // console.log('занято, перезапуск')
         startPointGenerator(battlefield, ship); 
     }
 }
@@ -90,7 +87,7 @@ function checkBeforePlacement(x,y,ship, battlefield) {
                     battlefield[x][y + i] = ship;
                     ship.coordinates.push([x,y + i])
                 }
-                return console.log('корабль вправо успешно добавлен')
+                return  
             }
             else {
                 return startPointGenerator(battlefield, ship);
@@ -107,7 +104,7 @@ function checkBeforePlacement(x,y,ship, battlefield) {
                     battlefield[x][y - i] = ship;
                     ship.coordinates.push([x,y - i])
                 }
-                return console.log('корабль влево успешно добавлен')
+                return  
             }
             else {
                 return startPointGenerator(battlefield, ship);
@@ -127,7 +124,7 @@ function checkBeforePlacement(x,y,ship, battlefield) {
                     battlefield[x + i][y] = ship;
                     ship.coordinates.push([x + i,y])
                 }
-                return (console.log('корабль вниз добавлен'))
+                return  
             }
             else {
                 return startPointGenerator(battlefield, ship);
@@ -145,7 +142,7 @@ function checkBeforePlacement(x,y,ship, battlefield) {
                     battlefield[x - i][y] = ship;
                     ship.coordinates.push([x - i,y])
                 }
-                return (console.log('корабль вверх добавлен'))
+                return  
             }
             else {
                 return startPointGenerator(battlefield, ship);

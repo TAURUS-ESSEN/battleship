@@ -36,34 +36,36 @@ function whoIsFirst(game) {
 }
 
 function startGame(game) {
-    // let currentPlayer = game.currentPlayer;
     console.log('Ход игрока - ', game.currentPlayer.name)
     let attackResult = '';
-    if (game.currentPlayer.enemyWounded === 'l;') {
-        console.log('стрельба по заданным координатам будет тут')
-        attackResult = game.currentPlayer.killWounded();
-    }
+    let attackPoint = null;
+
+    if (game.currentPlayer.enemyWounded === true) {
+            console.log('стрельба по заданным координатам будет тут')
+            attackResult = game.currentPlayer.killWounded();
+        }
     else {
-        let attackPoint = checkEnemyField(game.currentPlayer);
+        attackPoint = checkEnemyField(game.currentPlayer);
         attackResult = game.currentPlayer.attack(attackPoint);
         console.log('Результат стрельбы =', attackResult)
     }
     if (attackResult === 'X')
         {
-        game.currentPlayer.enemyWounded = true;
-        console.log("game.currentPlayer",game.currentPlayer)
         if (game.currentPlayer.enemyBoard.checkGameOver() === 'gameover') {
             return console.log(`gameover - ${game.currentPlayer.name} is win` )
         }
-            // сделать тут логику добивания.
             console.log('повторый ход!')
+            if (game.currentPlayer.enemyWounded === false)
+                { 
+                    game.currentPlayer.addTarget(attackPoint) 
+                }
             return startGame(game);
         }
     counter++; // вспомогательный счетчки удалить потом.
     console.log(`counter=`, counter,'заканчивает ход',game.currentPlayer.name)
     game.currentPlayer = game.currentPlayer === game.player2 ? game.player1 : game.player2; // смена игрока. 
     console.log(`Произошла смена игрока на ${game.currentPlayer.name}`)
-    draw(game) // вспомогательный код. рисует доску.
+    // draw(game) // вспомогательный код. рисует доску.
         return startGame(game);
 }
 
