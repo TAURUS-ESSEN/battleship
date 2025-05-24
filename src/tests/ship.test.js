@@ -81,17 +81,52 @@ import { Player } from '../player.js';
 //     });
  
 
+// test('KI test#1 add wounded', () => {
+//   const player1Board = new Gameboard("player1GameBoard");
+//   const player2Board = new Gameboard("player2GameBoard");
+//   const player1 = new Player('Eugen', player1Board, player2Board);
+//   const player2 = new Player('Mister X', player2Board, player1Board);
+//   player2.board.battlefield[0][1] = 'S';
+//   player2.board.battlefield[0][2] = 'S';
+//   player2.board.battlefield[0][3] = 'S';
+//   // player1.attack([1,2]);
+//   player1.targetX = 0;
+//   player1.targetY = 1;
+//   player1.killWounded();
+//   expect(player1.woundedPossibleCoordinates.length).toBe(3)
+// })
+
+// test('KI test#1 add wounded', () => {
+//   const player1Board = new Gameboard("player1GameBoard");
+//   const player2Board = new Gameboard("player2GameBoard");
+//   const player1 = new Player('Eugen', player1Board, player2Board);
+//   const player2 = new Player('Mister X', player2Board, player1Board);
+//   player2.board.battlefield[2][1] = 'S';
+//   player2.board.battlefield[2][2] = 'S';
+//   player2.board.battlefield[2][3] = 'S';
+//   // player1.attack([1,2]);
+//   player1.targetX = 2;
+//   player1.targetY = 1;
+//   player1.killWounded();
+//   // expect(player1.woundedPossibleCoordinates.length).toBe(3)
+//   // expect(player1.enemyBoard.battlefield[1][0]).toBe('B')
+//   expect(player1.enemyBoard.battlefield[5][2]).toBe('B')
+// })
+
 test('KI test#1 add wounded', () => {
   const player1Board = new Gameboard("player1GameBoard");
   const player2Board = new Gameboard("player2GameBoard");
   const player1 = new Player('Eugen', player1Board, player2Board);
   const player2 = new Player('Mister X', player2Board, player1Board);
-  player2.board.battlefield[0][1] = 'S';
-  player2.board.battlefield[0][2] = 'S';
-  player2.board.battlefield[0][3] = 'S';
+  player2.board.battlefield[2][1] = 'X';
+  player2.board.battlefield[2][2] = 'S';
+  player2.board.battlefield[2][3] = 'S';
   // player1.attack([1,2]);
-  player1.targetX = 0;
+  player1.targetX = 2;
   player1.targetY = 1;
+  // player1.woundedPossibleCoordinates = [[3,1],[1,1],[2,2],[2,0]] 
   player1.killWounded();
-  expect(player1.woundedPossibleCoordinates.length).toBe(3)
+  // expect(player1.woundedPossibleCoordinates.length).toBe(3)
+  // expect(player1.enemyBoard.battlefield[1][0]).toBe('B')
+  expect(player1.woundedPossibleCoordinates[0]).toBe([1,1])
 })

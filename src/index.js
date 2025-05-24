@@ -36,10 +36,9 @@ function whoIsFirst(game) {
 }
 
 function startGame(game) {
-    console.log('Ход игрока - ', game.currentPlayer.name)
+    console.log('Ход игрока - ', game.currentPlayer.name, 'enemyWounded', game.currentPlayer.enemyWounded)
     let attackResult = '';
     let attackPoint = null;
-
     if (game.currentPlayer.enemyWounded === true) {
             console.log('стрельба по заданным координатам будет тут')
             attackResult = game.currentPlayer.killWounded();
@@ -55,7 +54,7 @@ function startGame(game) {
             return console.log(`gameover - ${game.currentPlayer.name} is win` )
         }
             console.log('повторый ход!')
-            if (game.currentPlayer.enemyWounded === false)
+            if ((game.currentPlayer.enemyWounded === false) && (game.currentPlayer.targetIsSunk === false))
                 { 
                     game.currentPlayer.addTarget(attackPoint) 
                 }
@@ -65,7 +64,7 @@ function startGame(game) {
     console.log(`counter=`, counter,'заканчивает ход',game.currentPlayer.name)
     game.currentPlayer = game.currentPlayer === game.player2 ? game.player1 : game.player2; // смена игрока. 
     console.log(`Произошла смена игрока на ${game.currentPlayer.name}`)
-    // draw(game) // вспомогательный код. рисует доску.
+    draw(game) // вспомогательный код. рисует доску.
         return startGame(game);
 }
 

@@ -21,7 +21,7 @@ export class Gameboard {
         // console.log("еще есть корабли на плаву")
     } 
 
-    receiveAttack(x, y) {
+    receiveAttack(x, y, player) {
         console.log(`получен выстрел по ${x}.${y} в этой клетке было = ${this.battlefield[x][y]} `)
         if (this.battlefield[x][y] === '-')
         {
@@ -34,9 +34,18 @@ export class Gameboard {
             let istSunk = ship.isSunk();
             if (istSunk) {
                 this.blockSurroundingCells(ship);
+                player.enemyWounded = false;
+                player.targetIsSunk = true;
+                player.woundedPossibleCoordinates.length = 0;
+                // this.battlefield[x][y] = 'X';
+                //   if (player.enemyBoard.checkGameOver() === 'gameover') {
+                //        return console.log(`gameover - ${player.name} is win` )
+                //     }
+                  return this.battlefield[x][y] = 'X';
             }
+            player.targetIsSunk = false
             console.log('ship type=',ship.type,'ship.hits=', ship.hits, 'sunk=',ship.sunk)
-            return this.battlefield[x][y] = 'X';
+          return this.battlefield[x][y] = 'X';
         }
     }
 
