@@ -1,6 +1,5 @@
 'use strict';
 import { initializeGame, startGame } from "./index.js";
-import {  } from "./index.js";
 
 const player1NameInput = document.getElementById('player1NameInput');
 export const createPlayerAndStart = document.getElementById('player1ChangeNameButton');
@@ -20,6 +19,16 @@ createPlayerAndStart.addEventListener('click', () => {
         startGame(currentGame)
     }  
 })
+
+player2Board.addEventListener("click", (event) => {
+    console.log(event.target)
+    console.log(event.target.dataset.x, event.target.dataset.y)
+    let x = event.target.dataset.x;
+    let y = event.target.dataset.y
+    currentGame.player1.attack([x,y])
+    drawPlayer2Board(currentGame.player1.enemyBoard.battlefield)
+})
+
 drawPlayer1Board();
 drawPlayer2Board();
 
@@ -49,6 +58,8 @@ export function drawPlayer2Board(battlefield = '') {
         let string = document.createElement('div');
             for (let j=0; j<=9; j++) {
                 let cell = document.createElement('div');
+                cell.dataset.x = i;
+                cell.dataset.y = j;
                 if( battlefield !=='')
                 { 
                     if ((typeof(battlefield[i][j]) !== 'object') && (battlefield[i][j] !=='-')) {
