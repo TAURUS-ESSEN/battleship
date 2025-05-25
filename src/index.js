@@ -40,7 +40,6 @@ function startGame(game) {
     let attackResult = '';
     let attackPoint = null;
     if (game.currentPlayer.enemyWounded === true) {
-            console.log('стрельба по заданным координатам будет тут')
             attackResult = game.currentPlayer.killWounded();
         }
     else {
@@ -71,7 +70,7 @@ function startGame(game) {
 function checkEnemyField(currentPlayer) {
     let x = Math.floor(Math.random()*10);
     if (!currentPlayer.enemyBoard.battlefield[x].some(value => (value !== 'X') && (value !=='M') && (value !== 'B'))) {
-        console.log('строка уже забита \ отстреляна');
+        console.log('строка уже забита \ отстреляна')
         return checkEnemyField(currentPlayer)
     }
     let y = Math.floor(Math.random()*10);

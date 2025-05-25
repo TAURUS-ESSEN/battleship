@@ -18,7 +18,6 @@ export class Gameboard {
         if (!notAllSunk) {
             return 'gameover'
         }
-        // console.log("еще есть корабли на плаву")
     } 
 
     receiveAttack(x, y, player) {
@@ -37,15 +36,11 @@ export class Gameboard {
                 player.enemyWounded = false;
                 player.targetIsSunk = true;
                 player.woundedPossibleCoordinates.length = 0;
-                // this.battlefield[x][y] = 'X';
-                //   if (player.enemyBoard.checkGameOver() === 'gameover') {
-                //        return console.log(`gameover - ${player.name} is win` )
-                //     }
-                  return this.battlefield[x][y] = 'X';
+                return this.battlefield[x][y] = 'X';
             }
             player.targetIsSunk = false
             console.log('ship type=',ship.type,'ship.hits=', ship.hits, 'sunk=',ship.sunk)
-          return this.battlefield[x][y] = 'X';
+            return this.battlefield[x][y] = 'X';
         }
     }
 
@@ -53,8 +48,6 @@ export class Gameboard {
         console.log(`ship=${ship.type}, ship.sunk = ${ship.sunk}, ship.coordinates = ${ship.coordinates}`);
         ship.coordinates.forEach(arr => {
             let [x,y] = arr
-            // console.log('Проверка доступа', this.battlefield[x][y]) 
-            // console.log(`BLOCK x=${x}, y=${y}, arr=${arr}`)
             if (x + 1 < 10 && this.battlefield[x + 1][y] === '-') this.battlefield[x + 1][y] = 'B';
             if (x - 1 >= 0 && this.battlefield[x - 1][y] === '-') this.battlefield[x - 1][y] = 'B';
             if (y - 1 >= 0 && this.battlefield[x][y-1] === '-') this.battlefield[x][y-1] = 'B';
@@ -71,8 +64,6 @@ function startPointGenerator(battlefield, ship) {
     const x = Math.floor(Math.random()*10);
     const y = Math.floor(Math.random()*10);
     if (battlefield[x][y] === '-') {
-        // let startpunkt = {osX: x, osY: y };
-        // console.log('не занято', startpunkt)
         checkBeforePlacement(x,y,ship,battlefield)
     }
     else {

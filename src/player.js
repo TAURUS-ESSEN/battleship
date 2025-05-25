@@ -15,14 +15,11 @@ export class Player {
         const [x, y] = arr;
         console.log(`${this.name} стреляет по координатам ${x},${y}`)
         return this.enemyBoard.receiveAttack(x, y, this);
-        // return this.enemyBoard.receiveAttack(arr);
     }
 
     addTarget(coordinate) {
         this.enemyWounded = true;
-        // console.log ('this.enemyWounded ', this.enemyWounded);
         [this.targetX, this.targetY] = coordinate;
-        // console.log ('coordinate ', coordinate);
         console.log ('this.targetX ', this.targetX, 'this.targetY ', this.targetY);
     }
 
@@ -47,24 +44,6 @@ export class Player {
         if (this.woundedPossibleCoordinates.length === 0) {
             findWoundedPossibleCoordinates(x,y,this.enemyBoard, this.woundedPossibleCoordinates)
         } 
-        //если продолжаем добивать по отобранным координатам
-
-        // if (this.enemyBoard.battlefield[x][y]!=='M') {
-            // console.log( 'this.targetX', x , 'this.targetY',  y )
-            // if ((x < 9) && (this.enemyBoard.battlefield[x+1][y] !== 'M') &&  (this.enemyBoard.battlefield[x+1][y] !== 'B')) {
-            //     this.woundedPossibleCoordinates.push([x+1,y])           
-            // }
-            // if ((x > 0) && (this.enemyBoard.battlefield[x-1][y] !== 'M' )  &&  (this.enemyBoard.battlefield[x-1][y] !== 'B') ) {
-            //     this.woundedPossibleCoordinates.push([x-1,y])           
-            // }
-            // if ((y < 9) && (this.enemyBoard.battlefield[x][y+1] !== 'M')  &&  (this.enemyBoard.battlefield[x][y+1] !== 'B')) {
-            //     this.woundedPossibleCoordinates.push([x,y+1])           
-            // }
-            // if  ((y > 0) && (this.enemyBoard.battlefield[x][y-1] !== 'M')  &&  (this.enemyBoard.battlefield[x][y-1] !== 'B')) {
-            //     this.woundedPossibleCoordinates.push([x,y-1])           
-            // }
-            // console.log('this.woundedPossibleCoordinates',  this.woundedPossibleCoordinates  )
-        // }
         console.log(this.woundedPossibleCoordinates[0]);
         [this.targetX, this.targetY] = this.woundedPossibleCoordinates[0];
         this.woundedPossibleCoordinates.shift()
