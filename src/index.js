@@ -2,7 +2,7 @@
 import {Ship} from './ship.js';
 import {Gameboard} from './gameboard.js';
 import {Player} from './player.js';
-// import {createPlayerAndStart} from './render.js';
+import {drawPlayer1Board, drawPlayer2Board} from './render.js';
 
 function createFleet() {
     return [
@@ -38,7 +38,9 @@ function whoIsFirst(game) {
     return game;
 }
 
-function startGame(game) {
+export function startGame(game) {
+    drawPlayer1Board(game.player1.board.battlefield)
+    drawPlayer2Board(game.player2.board.battlefield)
     console.log('Ход игрока - ', game.currentPlayer.name, 'enemyWounded', game.currentPlayer.enemyWounded)
     let attackResult = '';
     let attackPoint = null;
