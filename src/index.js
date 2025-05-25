@@ -2,6 +2,7 @@
 import {Ship} from './ship.js';
 import {Gameboard} from './gameboard.js';
 import {Player} from './player.js';
+// import {createPlayerAndStart} from './render.js';
 
 function createFleet() {
     return [
@@ -14,25 +15,27 @@ function createFleet() {
     ];
 }
 
-function initializeGame() {
+export function initializeGame(player1Name) {
     const fleet1 = createFleet();
     const fleet2 = createFleet();
     const player1Board = new Gameboard("player1GameBoard");
     const player2Board = new Gameboard("player2GameBoard");
     player1Board.placeShips(fleet1);
     player2Board.placeShips(fleet2);
-    const player1 = new Player('Eugen', player1Board, player2Board);
+    const player1 = new Player(player1Name, player1Board, player2Board);
     const player2 = new Player('Mister X', player2Board, player1Board);
     const game = { currentPlayer: null, player1, player2}
     return whoIsFirst(game);
 }
 let counter = 0;
-initializeGame()
+// initializeGame()
+
 
 function whoIsFirst(game) {
     let firstTurn = Math.floor(Math.random()*2+1);
     game.currentPlayer = firstTurn === 1 ? game.player1 : game.player2;
-    startGame(game);
+    // startGame(game);
+    return game;
 }
 
 function startGame(game) {

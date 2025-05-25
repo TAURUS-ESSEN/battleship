@@ -6,8 +6,25 @@
     <title>Odin Projekt: Battlefield</title>
     <link rel="stylesheet" href="./css/style.css">
 </head>
-<script type="module" src="index.js" defer> </script>
+<script type="module" src="./render.js" defer> </script>
 <body>
-ss
+    <div class="wrapper">
+        <header>
+            <div class="player1Name" id="player1Name">
+                <label for="player1NameInput">Player Name</label>
+                <input type="text" id="player1NameInput">
+                <button id="player1ChangeNameButton">Start game</button>
+            </div>
+            <div class="turn"></div>
+            <div class="player2Name" id="player2Name">Computer</div>
+        </header>
+        <main>
+            <div class="playerBoard" id="player1Board"></div>
+            <div class="playerBoard" id="player2Board"></div>
+        </main>
+        <footer>
+            <div class="result" id="result">ddd</div>
+        </footer>
+    </div>
 </body>
 </html>

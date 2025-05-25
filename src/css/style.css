@@ -3,3 +3,41 @@
     padding: 0;
     box-sizing: border-box;
 }
+
+header {
+        display: flex;
+    width: 100%;
+    justify-content: space-evenly;
+    gap: 1em;
+    margin: 1em;
+}
+
+main {
+    display: flex;
+    width: 100%;
+    justify-content: space-evenly;
+    gap: 1em;
+}
+
+.playerBoard{
+    background-color: aqua;
+    /* border: 1px solid red; */
+    max-width: 500px;
+}
+
+.playerBoard > div {
+    background-color: bisque;
+    /* border: 1px solid black; */
+    display: flex;
+    width: 100%;
+}
+
+.playerBoard > div div {
+    width: 50px;
+    height: 50px;
+    background-color: blue;
+    border: 1px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
