@@ -2,7 +2,7 @@
 import {Ship} from './ship.js';
 import {Gameboard} from './gameboard.js';
 import {Player} from './player.js';
-import {drawPlayer1Board, drawPlayer2Board} from './render.js';
+import {drawPlayer1Board, drawPlayer2Board, currentPlayerName} from './render.js';
 
 function createFleet() {
     return [
@@ -41,7 +41,8 @@ function whoIsFirst(game) {
 export function startGame(game) {
     drawPlayer1Board(game.player1.board.battlefield)
     drawPlayer2Board(game.player2.board.battlefield)
-    
+    currentPlayerName(game.currentPlayer.name)
+
     if (game.currentPlayer.isHuman === true) {
         return console.log('это ход человека.')
     }

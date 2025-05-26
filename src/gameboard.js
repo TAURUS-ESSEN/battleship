@@ -1,4 +1,6 @@
 'use strict';
+import {playHit, playMiss} from './render.js'
+
 export class Gameboard {
     constructor(name) {
         this.name = name;
@@ -24,12 +26,14 @@ export class Gameboard {
         console.log(`получен выстрел по ${x}.${y} в этой клетке было = ${this.battlefield[x][y]} `)
         if (this.battlefield[x][y] === '-')
         {
+            playMiss()
             return this.battlefield[x][y] = 'M';
         }
         else {
             let ship = this.battlefield[x][y]
             console.log('ПОПАЛИ',this.battlefield[x][y], 'ship.type', ship.type)
             ship.hit();
+            playHit()
             let istSunk = ship.isSunk();
             if (istSunk) {
                 this.blockSurroundingCells(ship);

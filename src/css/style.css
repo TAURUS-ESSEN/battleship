@@ -22,7 +22,7 @@ main {
 .playerBoard{
     background-color: aqua;
     /* border: 1px solid red; */
-    max-width: 500px;
+    max-width: 700px;
 }
 
 .playerBoard > div {
@@ -33,11 +33,36 @@ main {
 }
 
 .playerBoard > div div {
-    width: 50px;
-    height: 50px;
+    width: 55px;
+    height: 55px;
     background-color: blue;
-    border: 1px solid black;
+    border: 1px solid rgba(47, 3, 135, 0.336);
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.disabled {
+    pointer-events: none;
+    opacity: 0.5;
+}
+
+.empty {
+    background-image: url('../img/empty.jpg');
+    background-size: contain;
+    opacity: 1;
+}
+
+.miss {
+    background-image: url('../img/miss.jpg');
+    background-size: contain;
+    opacity: 1;
+    
+}
+
+.hit {
+    background-image: url('../img/hit.jpg');
+    background-size: contain;
+    opacity: 1;
+    
 }
