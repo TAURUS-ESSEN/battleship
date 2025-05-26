@@ -1,8 +1,9 @@
 'use strict';
 export class Player {
-    constructor(name, myboard, enemyBoard) {
+    constructor(name, myboard, enemyBoard, isHuman) {
         this.name = name;
         this.board = myboard;
+        this.isHuman = isHuman;
         this.enemyBoard = enemyBoard;
         this.enemyWounded = false;
         this.targetX = null;

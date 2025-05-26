@@ -16,7 +16,8 @@ createPlayerAndStart.addEventListener('click', () => {
         drawPlayer1Board(currentGame.player1.board.battlefield)
         drawPlayer2Board(currentGame.player2.board.battlefield)
         turn.textContent = currentGame.currentPlayer.name + ' turn';
-        startGame(currentGame)
+        
+        startGame(currentGame);
     }  
 })
 
@@ -27,6 +28,10 @@ player2Board.addEventListener("click", (event) => {
     let y = event.target.dataset.y
     currentGame.player1.attack([x,y])
     drawPlayer2Board(currentGame.player1.enemyBoard.battlefield)
+    if (currentGame.player1.enemyBoard.battlefield[x][y] !== 'X') {
+        currentGame.currentPlayer = currentGame.currentPlayer === currentGame.player2 ? currentGame.player1 : currentGame.player2;
+    }
+    startGame(currentGame);
 })
 
 drawPlayer1Board();

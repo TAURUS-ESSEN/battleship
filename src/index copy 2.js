@@ -22,8 +22,8 @@ export function initializeGame(player1Name) {
     const player2Board = new Gameboard("player2GameBoard");
     player1Board.placeShips(fleet1);
     player2Board.placeShips(fleet2);
-    const player1 = new Player(player1Name, player1Board, player2Board, true);
-    const player2 = new Player('Mister X', player2Board, player1Board, false);
+    const player1 = new Player(player1Name, player1Board, player2Board);
+    const player2 = new Player('Mister X', player2Board, player1Board);
     const game = { currentPlayer: null, player1, player2}
     return whoIsFirst(game);
 }
@@ -41,42 +41,6 @@ function whoIsFirst(game) {
 export function startGame(game) {
     drawPlayer1Board(game.player1.board.battlefield)
     drawPlayer2Board(game.player2.board.battlefield)
-    
-    if (game.currentPlayer.isHuman === true) {
-        return console.log('это ход человека.')
-    }
-    console.log('Ход игрока - ', game.currentPlayer.name, 'enemyWounded', game.currentPlayer.enemyWounded)
-    let attackResult = '';
-    let attackPoint = null;
-    if (game.currentPlayer.enemyWounded === true) {
-            attackResult = game.currentPlayer.killWounded();
-        }
-    else {
-        attackPoint = checkEnemyField(game.currentPlayer);
-        attackResult = game.currentPlayer.attack(attackPoint);
-        console.log('Результат стрельбы =', attackResult)
-    }
-    if (attackResult === 'X')
-        {
-        if (game.currentPlayer.enemyBoard.checkGameOver() === 'gameover') {
-            return console.log(`gameover - ${game.currentPlayer.name} is win` )
-        }
-            console.log('повторый ход!')
-            if ((game.currentPlayer.enemyWounded === false) && (game.currentPlayer.targetIsSunk === false))
-                { 
-                    game.currentPlayer.addTarget(attackPoint) 
-                }
-            return startGame(game);
-        }
-    counter++; // вспомогательный счетчки удалить потом.
-    console.log(`counter=`, counter,'заканчивает ход',game.currentPlayer.name)
-    game.currentPlayer = game.currentPlayer === game.player2 ? game.player1 : game.player2; // смена игрока. 
-    console.log(`Произошла смена игрока на ${game.currentPlayer.name}`)
-    draw(game) // вспомогательный код. рисует доску.
-        return startGame(game);
-}
-
-function computerTurn(game) {
     console.log('Ход игрока - ', game.currentPlayer.name, 'enemyWounded', game.currentPlayer.enemyWounded)
     let attackResult = '';
     let attackPoint = null;
