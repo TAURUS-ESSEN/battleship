@@ -8,7 +8,7 @@
 
 body {
      font-family: "Love Ya Like A Sister", cursive;
-     background-image: url('../img/hip-square.png');
+     background-image: url('../img/hip-square.jpg');
      background-repeat: repeat;
 }
 
@@ -64,7 +64,7 @@ main {
 }
 
 .player1Name {
-    margin-bottom: 0.7em;
+    margin-bottom: 0.8em;
 }
 
 .leftBoard, .rightBoard {
@@ -171,4 +171,8 @@ main {
 .rotate180 {
     transform: rotate(-180deg);
     transform-origin: top left;
+}
+
+.gameover {
+    color: red;
 }

@@ -1,6 +1,6 @@
 'use strict';
 import { initializeGame, startGame } from "./index.js";
-import { Ship } from "./ship.js";
+ 
 
 const player1NameInput = document.getElementById('player1NameInput');
 export const createPlayerAndStart = document.getElementById('player1ChangeNameButton');
@@ -20,6 +20,7 @@ createPlayerAndStart.addEventListener('click', () => {
         currentPlayerName(currentGame.currentPlayer.name)
         startGame(currentGame);
         drawShips() 
+        // player1NameInput.disabled = true;
     }  
 })
 
@@ -36,7 +37,8 @@ player2Board.addEventListener("click", (event) => {
         currentGame.currentPlayer = currentGame.currentPlayer === currentGame.player2 ? currentGame.player1 : currentGame.player2;
     }
     else {
-        // playHit();
+        alert('achtung')
+        currentGame.currentPlayer.enemyBoard.checkGameOver()
     }
     currentPlayerName(currentGame.currentPlayer.name);
     setTimeout (() =>startGame(currentGame), 3000)
@@ -178,3 +180,18 @@ export function drawShips() {
         document.querySelector('#player1Board').appendChild(shipDiv);
     }
 }
+
+export function gameOver() {
+    alert('2')
+    player2Board.classList.add('disabled');
+    turn.textContent = `Game Over. ${currentGame.currentPlayer.name} win`;
+    turn.classList.add('gameover');
+    // player1NameInput.disabled = false;
+}
+// export function gameOver() {
+//     alert('2')
+//     player2Board.classList.add('disabled');
+//     turn.textContent = `Game Over. ${currentGame.currentPlayer.name} win`;
+//     turn.classList.add('gameover');
+//     // player1NameInput.disabled = false;
+// }
