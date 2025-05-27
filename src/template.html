@@ -10,20 +10,28 @@
 <body>
     <div class="wrapper">
         <header>
-            <div class="player1Name" id="player1Name">
-                <label for="player1NameInput">Player Name</label>
-                <input type="text" id="player1NameInput">
+            <!-- <div class="player1Name" id="player1Name">
+                <input type="text" id="player1NameInput" placeholder="Player Name">
                 <button id="player1ChangeNameButton">Start game</button>
-            </div>
+            </div> -->
             <div class="turn" id="turn"></div>
-            <div class="player2Name" id="player2Name">Computer</div>
+            <!-- <div class="player2Name" id="player2Name">Computer</div> -->
         </header>
         <main>
-            <div class="playerBoard" id="player1Board"></div>
-            <div class="playerBoard" id="player2Board"></div>
+            <div class="leftBoard">
+                <div class="player1Name" id="player1Name">
+                    <input type="text" id="player1NameInput" placeholder="Player Name">
+                    <button id="player1ChangeNameButton">Start </button>
+                </div>
+                <div class="playerBoard" id="player1Board"></div>
+            </div>
+            <div class="rightBoard">
+                <div class="player2Name" id="player2Name"><img src="./img/computer3.png"><p> Captain Jack</p></div>
+                <div class="playerBoard" id="player2Board"></div>
+            </div>
         </main>
         <footer>
-            <div class="result" id="result">ddd</div>
+            <!-- <div class="result" id="result">ddd</div> -->
         </footer>
     </div>
 </body>

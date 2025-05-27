@@ -2,7 +2,7 @@
 import {Ship} from './ship.js';
 import {Gameboard} from './gameboard.js';
 import {Player} from './player.js';
-import {drawPlayer1Board, drawPlayer2Board, currentPlayerName} from './render.js';
+import {drawPlayer1Board, drawPlayer2Board, currentPlayerName, drawShips} from './render.js';
 
 function createFleet() {
     return [
@@ -10,8 +10,8 @@ function createFleet() {
         new Ship("crusader1", 3),
         new Ship("crusader2", 3),
         new Ship("submarine", 2),
-        new Ship("minesweeper1", 1),
-        new Ship("minesweeper2", 1),
+        new Ship("mine1", 1),
+        new Ship("mine2", 1),
     ];
 }
 
@@ -23,7 +23,7 @@ export function initializeGame(player1Name) {
     player1Board.placeShips(fleet1);
     player2Board.placeShips(fleet2);
     const player1 = new Player(player1Name, player1Board, player2Board, true);
-    const player2 = new Player('Mister X', player2Board, player1Board, false);
+    const player2 = new Player('Captain Jack', player2Board, player1Board, false);
     const game = { currentPlayer: null, player1, player2}
     return whoIsFirst(game);
 }
@@ -41,6 +41,7 @@ function whoIsFirst(game) {
 export function startGame(game) {
     drawPlayer1Board(game.player1.board.battlefield)
     drawPlayer2Board(game.player2.board.battlefield)
+    drawShips()
     currentPlayerName(game.currentPlayer.name)
 
     if (game.currentPlayer.isHuman === true) {
@@ -67,13 +68,14 @@ export function startGame(game) {
                 { 
                     game.currentPlayer.addTarget(attackPoint) 
                 }
+                
             return startGame(game);
         }
     counter++; // вспомогательный счетчки удалить потом.
     console.log(`counter=`, counter,'заканчивает ход',game.currentPlayer.name)
     game.currentPlayer = game.currentPlayer === game.player2 ? game.player1 : game.player2; // смена игрока. 
     console.log(`Произошла смена игрока на ${game.currentPlayer.name}`)
-    draw(game) // вспомогательный код. рисует доску.
+    // draw(game) // вспомогательный код. рисует доску.
         return startGame(game);
 }
 

@@ -1,5 +1,6 @@
 'use strict';
 import { initializeGame, startGame } from "./index.js";
+import { Ship } from "./ship.js";
 
 const player1NameInput = document.getElementById('player1NameInput');
 export const createPlayerAndStart = document.getElementById('player1ChangeNameButton');
@@ -7,8 +8,6 @@ const player1Board = document.getElementById('player1Board');
 const player2Board = document.getElementById('player2Board');
 const resultsArea = document.getElementById('result');
 const turn = document.getElementById('turn')
-// const soundMiss = new Audio('./audio/miss.mp3');
-// const soundHit = new Audio('./audio/hit.mp3');
 
 let currentGame = null;
 
@@ -20,6 +19,7 @@ createPlayerAndStart.addEventListener('click', () => {
         drawPlayer2Board(currentGame.player2.board.battlefield)
         currentPlayerName(currentGame.currentPlayer.name)
         startGame(currentGame);
+        drawShips() 
     }  
 })
 
@@ -46,16 +46,10 @@ player2Board.addEventListener("click", (event) => {
 drawPlayer1Board();
 drawPlayer2Board();
 
+
 export function currentPlayerName(name) {
     turn.textContent = currentGame.currentPlayer.name + ' turn';
 }
-
-// export function playMiss() {
-//     soundMiss.play();
-// }
-// export function playHit() {
-//     soundHit.play();
-// }
 
 export function playMiss() {
     const soundMiss = new Audio('./audio/miss.mp3');
@@ -67,24 +61,44 @@ export function playHit() {
     soundHit.play();
 }
 
+export function playSunk() {    
+    const soundHit = new Audio('./audio/sunk.mp3');
+    soundHit.play();
+}
+
 export function drawPlayer1Board(battlefield = '') {
     player1Board.textContent = '';
     for (let i = 0; i<=9; i++) {
         let string = document.createElement('div');
             for (let j=0; j<=9; j++) {
                 let cell = document.createElement('div');
+                cell.classList.add('empty');
                 if( battlefield !=='')
                 { 
                     if (typeof(battlefield[i][j]) === 'object') {
-                        cell.textContent = 'SHIP'    
-                    } else {
-                        cell.textContent = battlefield[i][j]; 
+                        if (battlefield[i][j].type === 'submarine') {
+                            cell.classList.remove('empty');
+                        }   
+                        // cell.textContent =  battlefield[i][j].type   
+                    } 
+                    if (battlefield[i][j] ==='-') {
+                    } 
+                    if ((typeof(battlefield[i][j]) !== 'object') && (battlefield[i][j] !=='-')) {
+                        cell.classList.remove('empty');
+                        if ((battlefield[i][j] === 'M') || (battlefield[i][j] === 'B')) {
+                            cell.classList.add('miss');
+                        }
+                        else {
+                            cell.classList.add('hit');
+                        }
                     }
+                   
                 }
                 string.appendChild(cell)
             }
         player1Board.appendChild(string)
     }
+    
 }
 
 export function drawPlayer2Board(battlefield = '') {
@@ -101,13 +115,13 @@ export function drawPlayer2Board(battlefield = '') {
                 { 
                     if ((typeof(battlefield[i][j]) !== 'object') && (battlefield[i][j] !=='-')) {
                         cell.classList.remove('empty');
-                        if ((battlefield[i][j] === 'M') && (battlefield[i][j] === 'B')) {
+                        if ((battlefield[i][j] === 'M') || (battlefield[i][j] === 'B')) {
                             cell.classList.add('miss');
                         }
                         else {
                             cell.classList.add('hit');
                         }
-                        cell.textContent = battlefield[i][j];    
+                        // cell.textContent = battlefield[i][j];    
 
 
                     } else {
@@ -117,5 +131,50 @@ export function drawPlayer2Board(battlefield = '') {
                 string.appendChild(cell)
             }
         player2Board.appendChild(string)
+    }
+}
+
+export function drawShips() {
+    const fleet = currentGame.player1.board.fleet;
+    for (let i=0; i<fleet.length;i++) {
+        const [x,y] = fleet[i].coordinates[0];
+        console.log(fleet[i].coordinates)
+        console.log('x=',x,'y=',y)
+        const shipDiv = document.createElement('div');
+        shipDiv.classList.add('ship', fleet[i].type);  
+        if (fleet[i].length > 1) {
+            const [x1,y1] = fleet[i].coordinates[fleet[i].coordinates.length-1];
+            if (x === x1) {
+                shipDiv.classList.add('rotate90');
+                console.log(`корабль ${fleet[i].type} лежит горизонтально`)
+                if (y > y1) {
+                    shipDiv.style.left = `${y1 * 55}px`; // j — колонка
+                    shipDiv.style.top = `${x1 * 55+55}px`;  // i — строка
+                }
+                else {
+                    shipDiv.style.left = `${y * 55}px`; // j — колонка
+                    shipDiv.style.top = `${x * 55+55}px`;  // i — строка
+                }
+
+            }
+            if (x > x1) {
+                shipDiv.style.left = `${y1 * 55}px`; // j — колонка
+                shipDiv.style.top = `${x1 * 55}px`;  // i — строка
+                // shipDiv.classList.add('rotate180');
+                console.log(`корабль ${fleet[i].type} лежит вертикально снизу вверх`)
+            }
+            if (x < x1) {
+                shipDiv.style.left = `${y * 55}px`; // j — колонка
+                shipDiv.style.top = `${x * 55}px`;  // i — строка
+            }
+        }
+        shipDiv.style.width = `55px`;
+        shipDiv.style.height = `${fleet[i].length * 55}px`;
+        if (fleet[i].length === 1) {
+        shipDiv.style.left = `${y * 55}px`; // j — колонка
+        shipDiv.style.top = `${x * 55}px`;  // i — строка
+        }
+        shipDiv.style.position = 'absolute';
+        document.querySelector('#player1Board').appendChild(shipDiv);
     }
 }

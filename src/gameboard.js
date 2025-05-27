@@ -1,5 +1,5 @@
 'use strict';
-import {playHit, playMiss} from './render.js'
+import {playHit, playMiss, playSunk} from './render.js'
 
 export class Gameboard {
     constructor(name) {
@@ -40,6 +40,7 @@ export class Gameboard {
                 player.enemyWounded = false;
                 player.targetIsSunk = true;
                 player.woundedPossibleCoordinates.length = 0;
+                playSunk();
                 return this.battlefield[x][y] = 'X';
             }
             player.targetIsSunk = false
