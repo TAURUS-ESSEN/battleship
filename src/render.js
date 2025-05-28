@@ -23,8 +23,6 @@ createPlayerAndStart.addEventListener('click', () => {
 })
 
 player2Board.addEventListener("click", (event) => {
-    console.log(event.target)
-    console.log(event.target.dataset.x, event.target.dataset.y)
     let x = event.target.dataset.x;
     let y = event.target.dataset.y
     currentGame.player1.attack([x,y])
@@ -42,9 +40,9 @@ player2Board.addEventListener("click", (event) => {
 drawPlayer1Board();
 drawPlayer2Board();
 
-export function drawAll( ) {
-    drawPlayer1Board(currentGame.player1.board.battlefield)
-    drawPlayer2Board(currentGame.player2.board.battlefield)
+export function drawAll(game) {
+    drawPlayer1Board(game.player1.board.battlefield)
+    drawPlayer2Board(game.player2.board.battlefield)
     drawShips();
     currentPlayerName();
 }
@@ -134,40 +132,39 @@ export function drawShips() {
     const fleet = currentGame.player1.board.fleet;
     for (let i=0; i<fleet.length;i++) {
         const [x,y] = fleet[i].coordinates[0];
-        console.log(fleet[i].coordinates)
-        console.log('x=',x,'y=',y)
+        // console.log(fleet[i].coordinates)
+        // console.log('x=',x,'y=',y)
         const shipDiv = document.createElement('div');
         shipDiv.classList.add('ship', fleet[i].type);  
         if (fleet[i].length > 1) {
             const [x1,y1] = fleet[i].coordinates[fleet[i].coordinates.length-1];
             if (x === x1) {
                 shipDiv.classList.add('rotate90');
-                console.log(`корабль ${fleet[i].type} лежит горизонтально`)
+                // console.log(`корабль ${fleet[i].type} лежит горизонтально`)
                 if (y > y1) {
-                    shipDiv.style.left = `${y1 * 55}px`; // j — колонка
-                    shipDiv.style.top = `${x1 * 55+55}px`;  // i — строка
+                    shipDiv.style.left = `${y1 * 55}px`; 
+                    shipDiv.style.top = `${x1 * 55+55}px`;  
                 }
                 else {
-                    shipDiv.style.left = `${y * 55}px`; // j — колонка
-                    shipDiv.style.top = `${x * 55+55}px`;  // i — строка
+                    shipDiv.style.left = `${y * 55}px`; 
+                    shipDiv.style.top = `${x * 55+55}px`;
                 }
             }
             if (x > x1) {
-                shipDiv.style.left = `${y1 * 55}px`; // j — колонка
-                shipDiv.style.top = `${x1 * 55}px`;  // i — строка
-                // shipDiv.classList.add('rotate180');
-                console.log(`корабль ${fleet[i].type} лежит вертикально снизу вверх`)
+                shipDiv.style.left = `${y1 * 55}px`; 
+                shipDiv.style.top = `${x1 * 55}px`;  
+                // console.log(`корабль ${fleet[i].type} лежит вертикально снизу вверх`)
             }
             if (x < x1) {
-                shipDiv.style.left = `${y * 55}px`; // j — колонка
-                shipDiv.style.top = `${x * 55}px`;  // i — строка
+                shipDiv.style.left = `${y * 55}px`;
+                shipDiv.style.top = `${x * 55}px`; 
             }
         }
         shipDiv.style.width = `55px`;
         shipDiv.style.height = `${fleet[i].length * 55}px`;
         if (fleet[i].length === 1) {
-        shipDiv.style.left = `${y * 55}px`; // j — колонка
-        shipDiv.style.top = `${x * 55}px`;  // i — строка
+        shipDiv.style.left = `${y * 55}px`;  
+        shipDiv.style.top = `${x * 55}px`;  
         }
         shipDiv.style.position = 'absolute';
         document.querySelector('#player1Board').appendChild(shipDiv);
@@ -175,13 +172,12 @@ export function drawShips() {
 }
 
 export function gameOver() {
-    alert('4')
-    
-     currentGame.isOver = true;
+    drawPlayer1Board(currentGame.player1.board.battlefield)
+    drawPlayer2Board(currentGame.player2.board.battlefield)
+    drawShips();
+    currentGame.isOver = true;
     player2Board.classList.add('disabled');
     turn.classList.add('gameover');
     turn.textContent = `Game Over. ${currentGame.currentPlayer.name} win`;
-    // turn.classList.remove('gameover');
     return
-    
 }

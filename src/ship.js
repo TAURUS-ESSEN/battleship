@@ -1,5 +1,4 @@
 'use strict'
-
 export class Ship {
     constructor(type,length) {
         this.type = type;
@@ -14,7 +13,6 @@ export class Ship {
             return ++this.hits;
         }
         else {
-            console.log("превышено колчиество возможных попаданий")
             throw new Error("Ship has already been sunk.");
         }
     }

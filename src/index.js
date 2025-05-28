@@ -2,7 +2,6 @@
 import {Ship} from './ship.js';
 import {Gameboard} from './gameboard.js';
 import {Player} from './player.js';
-// import {drawPlayer1Board, drawPlayer2Board, currentPlayerName, drawShips, gameOver} from './render.js';
 import {drawAll, gameOver} from './render.js';
 
 function createFleet() {
@@ -37,49 +36,38 @@ function whoIsFirst(game) {
 
 export function startGame(game) {
     if (game.isOver) return;
-    // drawPlayer1Board(game.player1.board.battlefield)
-    // drawPlayer2Board(game.player2.board.battlefield)
-    // drawShips();
-    // currentPlayerName();
-    drawAll()
+    drawAll(game);
     if (game.currentPlayer.isHuman === true) {
         if (game.currentPlayer.enemyBoard.checkGameOver() === 'gameover') {
             return gameOver() 
         } 
-        return // если убрать комп будет сам с собой играть
-    }
-    else {
+    return 
+    } else {
         computerTurn(game);
     }
-    
 }
 
 function computerTurn(game) {
-let attackResult = '';
+    let attackResult = '';
     let attackPoint = null;
     if (game.currentPlayer.enemyWounded === true) {
-            attackResult = game.currentPlayer.killWounded();
-        } else {
+        attackResult = game.currentPlayer.killWounded();
+    } else {
         attackPoint = checkEnemyField(game.currentPlayer);
         attackResult = game.currentPlayer.attack(attackPoint);
     }
 
     if (attackResult === 'gameover') {
-        alert('game over')
-        drawPlayer1Board(game.player1.board.battlefield);
-        drawPlayer2Board(game.player2.board.battlefield);
         return gameOver();
     }
     if (attackResult === 'X') {
-            // console.log('повторый ход!')
         if ((game.currentPlayer.enemyWounded === false) && (game.currentPlayer.targetIsSunk === false)) { 
             game.currentPlayer.addTarget(attackPoint);
         }
-        startGame(game)
+        return setTimeout(() => startGame(game),2500); 
     }
     game.currentPlayer = game.currentPlayer === game.player2 ? game.player1 : game.player2; // смена игрока. 
-    console.log(`Произошла смена игрока на ${game.currentPlayer.name}`)
-    draw(game) // вспомогательный код. рисует доску.
+    // draw(game) // вспомогательный код. рисует доску.
     return startGame(game);
 }
 
@@ -92,8 +80,7 @@ function checkEnemyField(currentPlayer) {
     if ((currentPlayer.enemyBoard.battlefield[x][y]==='X') || (currentPlayer.enemyBoard.battlefield[x][y]==='M') || (currentPlayer.enemyBoard.battlefield[x][y]==='B')) {
         return checkEnemyField(currentPlayer)
     }
-    let coordinate = [x,y]; 
-    return coordinate
+    return [x,y]
 }
 
 function draw(game) {

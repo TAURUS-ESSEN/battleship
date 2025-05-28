@@ -1,5 +1,5 @@
 'use strict';
-import {playHit, playMiss, playSunk, gameOver} from './render.js'
+import {playHit, playMiss, playSunk} from './render.js'
 
 export class Gameboard {
     constructor(name) {
@@ -15,17 +15,22 @@ export class Gameboard {
     }
 
     checkGameOver() {
-        console.log('проверка на уничтожение');
         const notAllSunk = this.fleet.some(ship=> ship.sunk===false);
-        console.log('notAllSunk=',notAllSunk)
+        // console.log('notAllSunk=',notAllSunk)
         if (!notAllSunk) {
-            // alert('2.5')
             return 'gameover'
         }
     } 
 
     receiveAttack(x, y, player) {
-        console.log(`получен выстрел по ${x}.${y} в этой клетке было = ${this.battlefield[x][y]} `)
+        if (
+            this.battlefield[x][y] === 'X' ||
+            this.battlefield[x][y] === 'M' ||
+            this.battlefield[x][y] === 'B'
+        ) {
+        return; 
+        }
+        // console.log(`получен выстрел по ${x}.${y} в этой клетке было = ${this.battlefield[x][y]} `)
         if (this.battlefield[x][y] === '-')
         {
             playMiss()
@@ -33,7 +38,7 @@ export class Gameboard {
         }
         else {
             let ship = this.battlefield[x][y]
-            console.log('ПОПАЛИ',this.battlefield[x][y], 'ship.type', ship.type)
+            // console.log('ПОПАЛИ',this.battlefield[x][y], 'ship.type', ship.type)
             ship.hit();
             playHit()
             let istSunk = ship.isSunk();
@@ -47,20 +52,20 @@ export class Gameboard {
                 return this.checkGameOver() 
             }
             player.targetIsSunk = false
-            console.log('ship type=',ship.type,'ship.hits=', ship.hits, 'sunk=',ship.sunk)
+            // console.log('ship type=',ship.type,'ship.hits=', ship.hits, 'sunk=',ship.sunk)
             return this.battlefield[x][y] = 'X';
         }
     }
 
     blockSurroundingCells(ship) {
-        console.log(`ship=${ship.type}, ship.sunk = ${ship.sunk}, ship.coordinates = ${ship.coordinates}`);
+        // console.log(`ship=${ship.type}, ship.sunk = ${ship.sunk}, ship.coordinates = ${ship.coordinates}`);
         ship.coordinates.forEach(arr => {
             let [x,y] = arr
             if (x + 1 < 10 && this.battlefield[x + 1][y] === '-') this.battlefield[x + 1][y] = 'B';
             if (x - 1 >= 0 && this.battlefield[x - 1][y] === '-') this.battlefield[x - 1][y] = 'B';
             if (y - 1 >= 0 && this.battlefield[x][y-1] === '-') this.battlefield[x][y-1] = 'B';
             if (y + 1 < 10 && this.battlefield[x][y+1] === '-') this.battlefield[x][y+1] = 'B';
-            //теперь диагонали
+            //diagonale
             if (x - 1 >= 0 && y-1 >=0  && this.battlefield[x - 1][y - 1] === '-') this.battlefield[x - 1][y-1] = 'B';
             if (x + 1 < 10 && y-1 >=0  && this.battlefield[x + 1][y - 1] === '-') this.battlefield[x + 1][y-1] = 'B';
             if (x - 1 >= 0 && y+1 <10  && this.battlefield[x - 1][y + 1] === '-') this.battlefield[x - 1][y+1] = 'B';
@@ -68,6 +73,8 @@ export class Gameboard {
         })
     }
 }
+
+
 function startPointGenerator(battlefield, ship) {
     const x = Math.floor(Math.random()*10);
     const y = Math.floor(Math.random()*10);
@@ -75,7 +82,6 @@ function startPointGenerator(battlefield, ship) {
         checkBeforePlacement(x,y,ship,battlefield)
     }
     else {
-        // console.log('занято, перезапуск')
         startPointGenerator(battlefield, ship); 
     }
 }
