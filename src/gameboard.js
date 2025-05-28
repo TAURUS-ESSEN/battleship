@@ -15,25 +15,14 @@ export class Gameboard {
     }
 
     checkGameOver() {
-        alert('0');
         console.log('проверка на уничтожение');
         const notAllSunk = this.fleet.some(ship=> ship.sunk===false);
         console.log('notAllSunk=',notAllSunk)
         if (!notAllSunk) {
-           return 'gameover'
+            // alert('2.5')
+            return 'gameover'
         }
     } 
-   
-    checkGameOver2() {
-        alert('gameover2');
-        console.log('проверка на уничтожение');
-        const notAllSunk = this.fleet.some(ship=> ship.sunk===false);
-        console.log('notAllSunk=',notAllSunk)
-        if (!notAllSunk) {
-           return gameOver()
-        }
-    } 
-   
 
     receiveAttack(x, y, player) {
         console.log(`получен выстрел по ${x}.${y} в этой клетке было = ${this.battlefield[x][y]} `)
@@ -54,7 +43,8 @@ export class Gameboard {
                 player.targetIsSunk = true;
                 player.woundedPossibleCoordinates.length = 0;
                 playSunk();
-                return this.battlefield[x][y] = 'X';
+                this.battlefield[x][y] = 'X';
+                return this.checkGameOver() 
             }
             player.targetIsSunk = false
             console.log('ship type=',ship.type,'ship.hits=', ship.hits, 'sunk=',ship.sunk)

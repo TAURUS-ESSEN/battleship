@@ -47,7 +47,7 @@ export class Player {
         } 
         console.log(this.woundedPossibleCoordinates[0]);
         [this.targetX, this.targetY] = this.woundedPossibleCoordinates[0];
-        this.woundedPossibleCoordinates.shift()
+        this.woundedPossibleCoordinates.shift() 
         return this.enemyBoard.receiveAttack(this.targetX, this.targetY, this);
     }
 }
