@@ -3,9 +3,14 @@ import { initializeGame, startGame } from "./index.js";
 
 const player1NameInput = document.getElementById('player1NameInput');
 export const createPlayerAndStart = document.getElementById('player1ChangeNameButton');
+export const restartButton = document.getElementById('restartGame');
+const playerArea = document.getElementById('player1')
+const player1NameSpan = document.getElementById('player1Name')
+const startArea = document.getElementById('start')
 const player1Board = document.getElementById('player1Board');
 const player2Board = document.getElementById('player2Board');
 const turn = document.getElementById('turn')
+let activeTimeoutId = null;
 
 let currentGame = null;
 
@@ -17,9 +22,12 @@ createPlayerAndStart.addEventListener('click', () => {
         drawPlayer2Board(currentGame.player2.board.battlefield)
         currentPlayerName(currentGame.currentPlayer.name)
         startGame(currentGame);
-        drawShips() 
-        // player1NameInput.disabled = true;
-    }  
+        drawShips();
+        playerArea.style.display = 'block';
+        startArea.style.display = 'none';
+        restartButton.style.display = 'block';
+        player1NameSpan.textContent = player1NameInput.value;
+    }
 })
 
 player2Board.addEventListener("click", (event) => {
@@ -33,7 +41,7 @@ player2Board.addEventListener("click", (event) => {
     }
     currentPlayerName(currentGame.currentPlayer.name);
     if (!currentGame.isOver) {
-    setTimeout(() => startGame(currentGame), 3000);
+    activeTimeoutId = setTimeout(() => startGame(currentGame), 3000);
 }
 })
 
@@ -181,3 +189,22 @@ export function gameOver() {
     turn.textContent = `Game Over. ${currentGame.currentPlayer.name} win`;
     return
 }
+
+restartButton.addEventListener('click', () => {
+    turn.classList.remove('gameover'); 
+    drawPlayer1Board();
+    drawPlayer2Board();
+    currentGame = {};
+    player1NameInput.value = '';
+    turn.textContent = '';
+    player1NameInput.disabled = false;
+    console.log(currentGame)
+    createPlayerAndStart.style.opacity = 1;
+    player2Board.classList.add('disabled');
+    clearTimeout(activeTimeoutId);
+    activeTimeoutId = null;
+    playerArea.style.display = 'none';
+    startArea.style.display = 'block';
+    player1NameSpan.textContent = '';
+     restartButton.style.display = 'none';
+})

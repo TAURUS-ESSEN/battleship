@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Genos:ital,wght@0,100..900;1,100..900&family=Love+Ya+Like+A+Sister&family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&display=swap');
-
 * {
     margin: 0;
     padding: 0;
@@ -15,7 +13,6 @@
         }
 
 body {
-    /* font-family: Sketchetik, "Love Ya Like A Sister"; */
     font-family: Sketchetik;
     background-image: url('../img/hip-square.jpg');
     background-repeat: repeat;
@@ -32,9 +29,11 @@ header {
 
 footer {
         display: flex;
+        flex-direction: column;
+        align-items: center;
     width: 100%;
     height: 50px;
-    font-size: 2.5rem;
+    font-size: 2rem;
     padding-top: 1.5em;
     justify-content: center;
     color: rgb(8, 8, 116);
@@ -45,14 +44,14 @@ input {
     font-size: 1.8em;
     border-radius: 5px;
     width: 200px;
-     font-family: Sketchetik;
+    font-family: Sketchetik;
     padding: 0.2em;
     color: rgb(8, 8, 116);
     background-color: rgba(255, 255, 255, 0.551);
     margin-right: 0.5em;
 }
 
-button {
+.startGame {
     width: 70px;
     height: 50px;
     font-size: 1.2rem;
@@ -60,13 +59,35 @@ button {
     padding: 0.5em;
     border: 0;
     color: rgb(8, 8, 116);
-       font-family: Sketchetik;
+    font-family: Sketchetik;
     background-image: url('../img/start.png');
     background-color: white;
     background-size: contain;
     background-repeat: no-repeat;
+    visibility: visible;
+ 
+}
+
+.restartGame {
+    width: 105px;
+    height: 50px;
+    font-size: 1.2rem;
+    border-radius: 5px;
+    padding: 0.8em;
+    border: 0;
+    color: rgb(8, 8, 116);
+    font-family: Sketchetik;
+    /* background-image: url('../img/start.png'); */
+      background-image: url('../img/start.png'), url('../img/start.png');
+  background-position: left top, right bottom;
+    background-color: rgba(255, 255, 255, 0);
+    background-size: cover;
+  /* background-position: center top; */
+    background-repeat: no-repeat;
+    display: none;
     transition: 0.5s ;
 }
+
 
 button:hover {
     transform: scale(1.1);
@@ -82,12 +103,12 @@ main {
     transition: 0.5s;
 }
 
-.player1Name {
+.player1NameArea {
     /* margin-bottom: 0.6em; */
     display: flex;
     align-items: center;
     justify-content:center ;
-    height: 65px;
+    height: 93px;
 }
 
 .leftBoard, .rightBoard {
@@ -106,10 +127,33 @@ main {
 
 .player2Name img {
     display: block;
-    width: 90px;
+    width: 120px;
     padding-right: 1em;
 }
+.spanname {
+    position: relative;
+    top:-40px;
+}
 
+.player1Name {
+    /* display: flex; */
+    /* width: 100%; */
+    /* align-items: center; */
+    /* justify-content:center ; */
+    font-size: 1.7em;
+    color: rgb(8, 8, 116);
+    display: none;
+    /* position: relative; */
+}
+
+.player1Name img {
+    /* position: absolute; */
+    display: inline-block;
+    width: 110px;
+    /* left: -80px; */
+    /* bottom: -10px; */
+    /* padding-right: 1em; */
+}
 
 .playerBoard{
     max-width: 700px;
@@ -135,7 +179,7 @@ main {
 }
 
 #player2Board > div div:hover {
-    background-image: url('../img/target.png');
+    background-image: url('../img/target2.png');
 }
 
 .disabled {
@@ -143,21 +187,21 @@ main {
 }
 
 .empty {
-    /* background-image: url('../img/empty.jpg'); */
+    background-image: url('../img/empty6.png');
     background-color: rgb(255, 255, 255);
     background-size: contain;
     opacity: 1;
 }
 
 .miss {
-    background-image: url('../img/miss.png');
+    background-image: url('../img/miss3.png');
     background-size: contain;
     opacity: 1;
     pointer-events: none;
 }
 
 .hit {
-    background-image: url('../img/hit.jpg');
+    background-image: url('../img/hit3.png');
     background-size: contain;
     opacity: 1;
     z-index: 999;
@@ -177,16 +221,18 @@ main {
 }
 
 .submarine {
-    background-image: url('../img/submarine.png');
+    background-image: url('../img/submarine3.png');
+    height: 110px;
+    width: 55px;
 }
 .crusader1, .crusader2 {
-    background-image: url('../img/crusader1.png');
+    background-image: url('../img/crusader3.png');
 }
 .mine1, .mine2 {
-    background-image: url('../img/mine.png');
+    background-image: url('../img/mine2.png');
 }
 .linkor {
-    background-image: url('../img/linkor.png');
+    background-image: url('../img/aircraft.png');
 }
 
 .rotate90 {

@@ -10,18 +10,20 @@
 <body>
     <div class="wrapper">
         <header>
-            <!-- <div class="player1Name" id="player1Name">
-                <input type="text" id="player1NameInput" placeholder="Player Name">
-                <button id="player1ChangeNameButton">Start game</button>
-            </div> -->
             <div class="turn" id="turn2"></div>
-            <!-- <div class="player2Name" id="player2Name">Computer</div> -->
         </header>
         <main>
             <div class="leftBoard">
-                <div class="player1Name" id="player1Name">
-                    <input type="text" id="player1NameInput" placeholder="Player Name">
-                    <button id="player1ChangeNameButton">Start</button>
+                <div class="player1NameArea" id="player1NameArea">
+                    <div class="start" id="start">
+                        <input type="text" id="player1NameInput" placeholder="Player Name">
+                        <button id="player1ChangeNameButton" class="startGame">Start</button>
+                    </div>
+                    <div class="player1Name" id="player1">
+                        <img src="./img/admiral3.png">
+                        <span class="spanname" id="player1Name"> </span>
+                        
+                    </div>
                 </div>
                 <div class="playerBoard" id="player1Board"></div>
             </div>
@@ -31,7 +33,9 @@
             </div>
         </main>
         <footer>
-            <div class="turn" id="turn"></div>
+              <button id="restartGame" class="restartGame">Restart</button>
+               
+            <div class="turn" id="turn">Enter name and press Start button to play</div>
             <div class="result2" id="result2"><img src="img/anker.png"></div>
             <div class="result" id="result"><img src="img/ship.png"></div>
             <div class="result3" id="result3"><img src="img/illuminator.png"></div>
