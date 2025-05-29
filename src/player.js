@@ -14,7 +14,7 @@ export class Player {
     }
     attack(arr) {
         const [x, y] = arr;
-        // console.log(`${this.name} стреляет по координатам ${x},${y}`)
+        console.log(`${this.name} стреляет по координатам ${x},${y}`)
         return this.enemyBoard.receiveAttack(x, y, this);
         // return this.enemyBoard.receiveAttack(arr, this);
     }

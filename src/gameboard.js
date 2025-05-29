@@ -1,5 +1,5 @@
 'use strict';
-import {playHit, playMiss, playSunk} from './render.js'
+import {playHit, playMiss, playSunk} from './sounds.js'
 
 export class Gameboard {
     constructor(name) {
@@ -23,13 +23,6 @@ export class Gameboard {
     } 
 
     receiveAttack(x, y, player) {
-        if (
-            this.battlefield[x][y] === 'X' ||
-            this.battlefield[x][y] === 'M' ||
-            this.battlefield[x][y] === 'B'
-        ) {
-        return; 
-        }
         // console.log(`получен выстрел по ${x}.${y} в этой клетке было = ${this.battlefield[x][y]} `)
         if (this.battlefield[x][y] === '-')
         {
@@ -49,7 +42,9 @@ export class Gameboard {
                 player.woundedPossibleCoordinates.length = 0;
                 playSunk();
                 this.battlefield[x][y] = 'X';
-                return this.checkGameOver() 
+                // return this.checkGameOver() 
+                let result = this.checkGameOver() === 'gameover' ? 'gameover' : 'X';
+                return result;
             }
             player.targetIsSunk = false
             // console.log('ship type=',ship.type,'ship.hits=', ship.hits, 'sunk=',ship.sunk)

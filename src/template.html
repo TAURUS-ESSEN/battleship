@@ -9,17 +9,15 @@
 <script type="module" src="./render.js" defer> </script>
 <body>
     <div class="wrapper">
-        <header>
-            <div class="turn" id="turn2"></div>
-        </header>
+        <header></header>
         <main>
             <div class="leftBoard">
                 <div class="player1NameArea" id="player1NameArea">
-                    <div class="start" id="start">
-                        <input type="text" id="player1NameInput" placeholder="Player Name">
-                        <button id="player1ChangeNameButton" class="startGame">Start</button>
+                    <div class="startScreen" id="startScreen">
+                        <input type="text" id="player1NameInput" maxlength="12" placeholder="Enter your name">
+                        <button id="startGame" class="startGame">Start</button>
                     </div>
-                    <div class="player1Name" id="player1">
+                    <div class="player1Name" id="gameScreen">
                         <img src="./img/admiral3.png">
                         <span class="spanname" id="player1Name"> </span>
                         
@@ -33,13 +31,12 @@
             </div>
         </main>
         <footer>
-              <button id="restartGame" class="restartGame">Restart</button>
-               
-            <div class="turn" id="turn">Enter name and press Start button to play</div>
-            <div class="result2" id="result2"><img src="img/anker.png"></div>
-            <div class="result" id="result"><img src="img/ship.png"></div>
-            <div class="result3" id="result3"><img src="img/illuminator.png"></div>
-            <div class="result4" id="result4"><img src="img/pirat.png"></div>
+            <button id="restartGame" class="restartGame">Restart</button>
+            <div class="turnMessage" id="turnMessage">Enter your name and press Start button to play</div>
+            <div class="decoAnker"><img src="img/anker.png"></div>
+            <div class="decoShip"><img src="img/ship.png"></div>
+            <div class="decoIlluminator"><img src="img/illuminator.png"></div>
+            <div class="decoPirate"><img src="img/pirat.png"></div>
         </footer>
     </div>
 </body>

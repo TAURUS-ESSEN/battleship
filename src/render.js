@@ -1,80 +1,78 @@
 'use strict';
-import { initializeGame, startGame } from "./index.js";
+import { initializeGame, playTurn } from "./index.js";
 
 const player1NameInput = document.getElementById('player1NameInput');
-export const createPlayerAndStart = document.getElementById('player1ChangeNameButton');
-export const restartButton = document.getElementById('restartGame');
-const playerArea = document.getElementById('player1')
-const player1NameSpan = document.getElementById('player1Name')
-const startArea = document.getElementById('start')
+const startButton = document.getElementById('startGame');
+const restartButton = document.getElementById('restartGame');
+
+const gameScreen = document.getElementById('gameScreen') 
+const player1Name = document.getElementById('player1Name');  
+const startScreen = document.getElementById('startScreen'); 
+
 const player1Board = document.getElementById('player1Board');
 const player2Board = document.getElementById('player2Board');
-const turn = document.getElementById('turn')
-let activeTimeoutId = null;
+const turnMessage = document.getElementById('turnMessage');
 
+let activeTimeoutId = null;
 let currentGame = null;
 
-createPlayerAndStart.addEventListener('click', () => {
-    turn.classList.remove('gameover');
-    if (player1NameInput.value !=='') {
-        currentGame = initializeGame(player1NameInput.value);
-        drawPlayer1Board(currentGame.player1.board.battlefield)
-        drawPlayer2Board(currentGame.player2.board.battlefield)
-        currentPlayerName(currentGame.currentPlayer.name)
-        startGame(currentGame);
-        drawShips();
-        playerArea.style.display = 'block';
-        startArea.style.display = 'none';
-        restartButton.style.display = 'block';
-        player1NameSpan.textContent = player1NameInput.value;
-    }
+startButton.addEventListener('click', () => {
+    if (player1NameInput.value !=='') { startGame(); } 
+    else { player1NameInput.classList.add("error");}
 })
+restartButton.addEventListener('click', resetGame);
 
 player2Board.addEventListener("click", (event) => {
-    let x = event.target.dataset.x;
-    let y = event.target.dataset.y
-    currentGame.player1.attack([x,y])
-    drawPlayer2Board(currentGame.player1.enemyBoard.battlefield)
+    let x = Number(event.target.dataset.x);
+    let y = Number(event.target.dataset.y);
+    attackEnemy(x, y );
+})
+
+function attackEnemy(x,y) {
+    if (Number.isNaN(x)) { return }
+    currentGame.player1.attack([x,y]);
+    drawPlayer2Board(currentGame.player1.enemyBoard.battlefield);
     if (currentGame.player1.enemyBoard.battlefield[x][y] !== 'X') {
         player2Board.classList.add('disabled');
         currentGame.currentPlayer = currentGame.currentPlayer === currentGame.player2 ? currentGame.player1 : currentGame.player2;
     }
-    currentPlayerName(currentGame.currentPlayer.name);
+    showTurnMessage();
     if (!currentGame.isOver) {
-    activeTimeoutId = setTimeout(() => startGame(currentGame), 3000);
+        activeTimeoutId = setTimeout(() => playTurn(currentGame), 3000);
+    }
 }
-})
 
-drawPlayer1Board();
-drawPlayer2Board();
+function startGame() {
+    currentGame = initializeGame(player1NameInput.value);
+    drawPlayer1Board(currentGame.player1.board.battlefield);
+    drawPlayer2Board(currentGame.player2.board.battlefield);
+    showTurnMessage();
+    if (!currentGame.currentPlayer.isHuman) {
+        player2Board.classList.add('disabled');
+        setTimeout(() => playTurn(currentGame), 5000);
+    } 
+    else {
+        playTurn(currentGame);
+    }
+    drawShips();
+    gameScreen.style.display = 'block';
+    startScreen.style.display = 'none';
+    restartButton.style.display = 'block';
+    player1Name.textContent = player1NameInput.value;
+}
 
 export function drawAll(game) {
     drawPlayer1Board(game.player1.board.battlefield)
     drawPlayer2Board(game.player2.board.battlefield)
     drawShips();
-    currentPlayerName();
+    showTurnMessage();
 }
 
-export function currentPlayerName() {
-    turn.textContent = `${currentGame.currentPlayer.name} is attacking`;
+function showTurnMessage() {
+    turnMessage.textContent = `${currentGame.currentPlayer.name} is attacking`;
 }
 
-export function playMiss() {
-    const soundMiss = new Audio('./audio/miss.mp3');
-    soundMiss.play();
-}
-
-export function playHit() {
-    const soundHit = new Audio('./audio/hit.mp3');
-    soundHit.play();
-}
-
-export function playSunk() {    
-    const soundHit = new Audio('./audio/sunk.mp3');
-    soundHit.play();
-}
-
-export function drawPlayer1Board(battlefield = '') {
+function drawPlayer1Board(battlefield = '') {
     player1Board.textContent = '';
     for (let i = 0; i<=9; i++) {
         let string = document.createElement('div');
@@ -106,7 +104,7 @@ export function drawPlayer1Board(battlefield = '') {
     }
 }
 
-export function drawPlayer2Board(battlefield = '') {
+function drawPlayer2Board(battlefield = '') {
     player2Board.classList.remove('disabled');
     player2Board.textContent = '';
     for (let i = 0; i<=9; i++) {
@@ -136,12 +134,10 @@ export function drawPlayer2Board(battlefield = '') {
     }
 }
 
-export function drawShips() {
+function drawShips() {
     const fleet = currentGame.player1.board.fleet;
-    for (let i=0; i<fleet.length;i++) {
-        const [x,y] = fleet[i].coordinates[0];
-        // console.log(fleet[i].coordinates)
-        // console.log('x=',x,'y=',y)
+    for (let i = 0; i < fleet.length; i++) {
+        const [x, y] = fleet[i].coordinates[0];
         const shipDiv = document.createElement('div');
         shipDiv.classList.add('ship', fleet[i].type);  
         if (fleet[i].length > 1) {
@@ -185,26 +181,27 @@ export function gameOver() {
     drawShips();
     currentGame.isOver = true;
     player2Board.classList.add('disabled');
-    turn.classList.add('gameover');
-    turn.textContent = `Game Over. ${currentGame.currentPlayer.name} win`;
+    turnMessage.classList.add('gameover');
+    turnMessage.textContent = `Game Over. ${currentGame.currentPlayer.name} win`;
     return
 }
 
-restartButton.addEventListener('click', () => {
-    turn.classList.remove('gameover'); 
+
+function resetGame() {
+    turnMessage.classList.remove('gameover'); 
+    turnMessage.textContent = '';
     drawPlayer1Board();
     drawPlayer2Board();
-    currentGame = {};
+    currentGame = null;
     player1NameInput.value = '';
-    turn.textContent = '';
-    player1NameInput.disabled = false;
-    console.log(currentGame)
-    createPlayerAndStart.style.opacity = 1;
     player2Board.classList.add('disabled');
     clearTimeout(activeTimeoutId);
     activeTimeoutId = null;
-    playerArea.style.display = 'none';
-    startArea.style.display = 'block';
-    player1NameSpan.textContent = '';
-     restartButton.style.display = 'none';
-})
+    gameScreen.style.display = 'none';
+    startScreen.style.display = 'block';
+    restartButton.style.display = 'none';
+    player1NameInput.classList.remove("error")
+} 
+
+drawPlayer1Board();
+drawPlayer2Board();

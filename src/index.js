@@ -34,7 +34,7 @@ function whoIsFirst(game) {
     return game;
 }
 
-export function startGame(game) {
+export function playTurn(game) {
     if (game.isOver) return;
     drawAll(game);
     if (game.currentPlayer.isHuman === true) {
@@ -56,7 +56,6 @@ function computerTurn(game) {
         attackPoint = checkEnemyField(game.currentPlayer);
         attackResult = game.currentPlayer.attack(attackPoint);
     }
-
     if (attackResult === 'gameover') {
         return gameOver();
     }
@@ -64,11 +63,11 @@ function computerTurn(game) {
         if ((game.currentPlayer.enemyWounded === false) && (game.currentPlayer.targetIsSunk === false)) { 
             game.currentPlayer.addTarget(attackPoint);
         }
-        return setTimeout(() => startGame(game),2500); 
+        return setTimeout(() => playTurn(game),2500); 
     }
     game.currentPlayer = game.currentPlayer === game.player2 ? game.player1 : game.player2; // смена игрока. 
     // draw(game) // вспомогательный код. рисует доску.
-    return startGame(game);
+    return playTurn(game);
 }
 
 function checkEnemyField(currentPlayer) {

@@ -1,3 +1,9 @@
+:root {
+    --color1:#080874;
+    --color2: #3333c1;
+    --main-textcolor: var(--color1);
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -19,73 +25,62 @@ body {
 }
 
 header {
-    display: flex;
     width: 100%;
     height: 20px;
-    font-size: 2em;
-    justify-content: center;
-    color: rgb(8, 8, 116);
 }
 
 footer {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     width: 100%;
-    height: 50px;
+    height: 3rem;
     font-size: 2rem;
     padding-top: 1.5em;
     justify-content: center;
-    color: rgb(8, 8, 116);
+    color: var(--color1)
 }
 
 input {
-    border: 2px solid rgba(51, 51, 193, 0.941);
-    font-size: 1.8em;
+    border: 2px solid var(--color2);
+    font-size: 1.8rem;   
     border-radius: 5px;
     width: 200px;
     font-family: Sketchetik;
     padding: 0.2em;
-    color: rgb(8, 8, 116);
-    background-color: rgba(255, 255, 255, 0.551);
+    color: var(--color1);
+    background-color: transparent;
     margin-right: 0.5em;
 }
 
-.startGame {
-    width: 70px;
-    height: 50px;
+input::placeholder {
+    font-size: 0.8em;
+}
+
+button {
     font-size: 1.2rem;
     border-radius: 5px;
-    padding: 0.5em;
+    padding: 0.8em;
     border: 0;
-    color: rgb(8, 8, 116);
+    color: var(--main-textcolor);
     font-family: Sketchetik;
-    background-image: url('../img/start.png');
-    background-color: white;
-    background-size: contain;
+    background-image: url('../img/start.png'), url('../img/start.png');
+    background-position: left top, right bottom;
+    background-color: transparent;
+    background-size: cover;
     background-repeat: no-repeat;
-    visibility: visible;
- 
+    transition: 0.5s ;
+}
+
+.startGame {
+    width: 100px;
+    height: 50px;
 }
 
 .restartGame {
     width: 105px;
     height: 50px;
-    font-size: 1.2rem;
-    border-radius: 5px;
-    padding: 0.8em;
-    border: 0;
-    color: rgb(8, 8, 116);
-    font-family: Sketchetik;
-    /* background-image: url('../img/start.png'); */
-      background-image: url('../img/start.png'), url('../img/start.png');
-  background-position: left top, right bottom;
-    background-color: rgba(255, 255, 255, 0);
-    background-size: cover;
-  /* background-position: center top; */
-    background-repeat: no-repeat;
     display: none;
-    transition: 0.5s ;
 }
 
 
@@ -249,44 +244,49 @@ main {
     color: red;
 }
 
-.result {
+.decoShip {
     position: absolute;
     right: 0;
     bottom: 0;
 }
 
-.result img {
+.decoShip img {
     display: block;
     width: 190px;
 }
 
 
-.result2 {
+.decoAnker {
     position: absolute;
     left: 0;
     bottom: 0;
 }
-.result2 img {
+.decoAnker img {
     display: block;
     width: 300px;
 }
 
-.result3 {
+.decoIlluminator {
     position: absolute;
     right: 0;
     bottom: 60%;
 }
-.result3 img {
+.decoIlluminator img {
     display: block;
     width: 200px;
 }
 
-.result4 {
+.decoPirate {
     position: absolute;
     left: 0;
     bottom: 50%;
 }
-.result4 img {
+.decoPirate img {
     display: block;
     width: 200px;
+}
+
+.error::placeholder  {
+    color:red;
+    font-size: 0.8em;
 }
