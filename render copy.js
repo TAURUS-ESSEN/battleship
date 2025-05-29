@@ -31,7 +31,8 @@ player2Board.addEventListener("click", (event) => {
 function attackEnemy(x,y) {
     if (Number.isNaN(x)) { return }
     currentGame.player1.attack([x,y]);
-    drawBoard(player2Board, currentGame.player2.board.battlefield, true);
+    // drawPlayer2Board(currentGame.player1.enemyBoard.battlefield);
+    drawBoard(player2Board, currentGame.player2.board.battlefield, false);
     if (currentGame.player1.enemyBoard.battlefield[x][y] !== 'X') {
         player2Board.classList.add('disabled');
         currentGame.currentPlayer = currentGame.currentPlayer === currentGame.player2 ? currentGame.player1 : currentGame.player2;
@@ -44,13 +45,16 @@ function attackEnemy(x,y) {
 
 function startGame() {
     currentGame = initializeGame(player1NameInput.value);
-    drawBoard(player1Board, currentGame.player1.board.battlefield, false);
-    drawBoard(player2Board, currentGame.player2.board.battlefield, true);
+    // drawPlayer1Board(currentGame.player1.board.battlefield);
+    // drawPlayer2Board(currentGame.player2.board.battlefield);
+    drawBoard(player1Board, currentGame.player1.board.battlefield, true);
+    drawBoard(player2Board, currentGame.player2.board.battlefield, false);
     showTurnMessage();
     if (!currentGame.currentPlayer.isHuman) {
         player2Board.classList.add('disabled');
         setTimeout(() => playTurn(currentGame), 2000);
-    } else {
+    } 
+    else {
         playTurn(currentGame);
     }
     drawShips();
@@ -61,8 +65,10 @@ function startGame() {
 }
 
 export function drawAll(game) {
-    drawBoard(player1Board, currentGame.player1.board.battlefield, false);
-    drawBoard(player2Board, currentGame.player2.board.battlefield, true);
+    // drawPlayer1Board(game.player1.board.battlefield)
+    // drawPlayer2Board(game.player2.board.battlefield)
+    drawBoard(player1Board, currentGame.player1.board.battlefield, true);
+    drawBoard(player2Board, currentGame.player2.board.battlefield, false);
     drawShips();
     showTurnMessage();
 }
@@ -71,15 +77,15 @@ function showTurnMessage() {
     turnMessage.textContent = `${currentGame.currentPlayer.name} is attacking`;
 }
 
-function drawBoard(playerBoard, battlefield = '', isClickable= false) {
+function drawBoard(playerBoard, battlefield = '', isPlayer1 = true) {
     playerBoard.textContent = '';
-    if (isClickable) { playerBoard.classList.remove('disabled');}
+    if (!isPlayer1) { playerBoard.classList.remove('disabled');}
         
     for (let i = 0; i <= 9; i++) {
     const row = document.createElement('div');
         for (let j = 0; j <= 9; j++) {
             const cell = document.createElement('div');   
-            if (isClickable) {             
+            if (!isPlayer1) {             
                 cell.dataset.x = i;
                 cell.dataset.y = j;
             }
@@ -101,6 +107,63 @@ function drawBoard(playerBoard, battlefield = '', isClickable= false) {
     playerBoard.appendChild(row)
     }
 } 
+
+// function drawPlayer1Board(battlefield = '') {
+//     player1Board.textContent = '';
+//     for (let i = 0; i<=9; i++) {
+//         let string = document.createElement('div');
+//             for (let j=0; j<=9; j++) {
+//                 let cell = document.createElement('div');
+//                 cell.classList.add('empty');
+//                 if( battlefield !=='')
+//                 { 
+//                     if (battlefield[i][j] ==='-') {
+//                     } 
+//                     if ((typeof(battlefield[i][j]) !== 'object') && (battlefield[i][j] !=='-')) {
+//                         cell.classList.remove('empty');
+//                         if ((battlefield[i][j] === 'M') || (battlefield[i][j] === 'B')) {
+//                             cell.classList.add('miss');
+//                         }
+//                         else {
+//                             cell.classList.add('hit');
+//                         }
+//                     }
+//                 }
+//                 string.appendChild(cell)
+//             }
+//         player1Board.appendChild(string)
+//     }
+// }
+
+// function drawPlayer2Board(battlefield = '') {
+//     player2Board.classList.remove('disabled');
+//     player2Board.textContent = '';
+//     for (let i = 0; i<=9; i++) {
+//         let string = document.createElement('div');
+//             for (let j=0; j<=9; j++) {
+//                 let cell = document.createElement('div');
+//                 cell.dataset.x = i;
+//                 cell.dataset.y = j;
+//                 cell.classList.add('empty');
+//                 if( battlefield !=='')
+//                 { 
+//                     if ((typeof(battlefield[i][j]) !== 'object') && (battlefield[i][j] !=='-')) {
+//                         cell.classList.remove('empty');
+//                         if ((battlefield[i][j] === 'M') || (battlefield[i][j] === 'B')) {
+//                             cell.classList.add('miss');
+//                         }
+//                         else {
+//                             cell.classList.add('hit');
+//                         }
+//                     } else {
+//                         // cell.textContent = '' 
+//                     }
+//                 }
+//                 string.appendChild(cell)
+//             }
+//         player2Board.appendChild(string)
+//     }
+// }
 
 function drawShips() {
     const fleet = currentGame.player1.board.fleet;
@@ -144,8 +207,10 @@ function drawShips() {
 }
 
 export function gameOver() {
-    drawBoard(player1Board, currentGame.player1.board.battlefield, false);
-    drawBoard(player2Board, currentGame.player2.board.battlefield, true);
+    // drawPlayer1Board(currentGame.player1.board.battlefield)
+    // drawPlayer2Board(currentGame.player2.board.battlefield)
+    drawBoard(player1Board, currentGame.player1.board.battlefield, true);
+    drawBoard(player2Board, currentGame.player2.board.battlefield, false);
     drawShips();
     currentGame.isOver = true;
     player2Board.classList.add('disabled');
@@ -154,9 +219,12 @@ export function gameOver() {
     return
 }
 
+
 function resetGame() {
     turnMessage.classList.remove('gameover'); 
     turnMessage.textContent = '';
+    // drawPlayer1Board();
+    // drawPlayer2Board();
     drawBoard(player1Board);
     drawBoard(player2Board);
     currentGame = null;
@@ -170,5 +238,7 @@ function resetGame() {
     player1NameInput.classList.remove("error")
 } 
 
+// drawPlayer1Board();
+// drawPlayer2Board();
 drawBoard(player1Board);
 drawBoard(player2Board);
