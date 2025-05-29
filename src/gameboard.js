@@ -11,12 +11,10 @@ export class Gameboard {
         fleet.forEach(ship => {
             startPointGenerator(this.battlefield, ship)
         })
-        
     }
 
     checkGameOver() {
         const notAllSunk = this.fleet.some(ship=> ship.sunk===false);
-        // console.log('notAllSunk=',notAllSunk)
         if (!notAllSunk) {
             return 'gameover'
         }
@@ -28,10 +26,8 @@ export class Gameboard {
         {
             playMiss()
             return this.battlefield[x][y] = 'M';
-        }
-        else {
+        } else {
             let ship = this.battlefield[x][y]
-            // console.log('ПОПАЛИ',this.battlefield[x][y], 'ship.type', ship.type)
             ship.hit();
             playHit()
             let istSunk = ship.isSunk();
@@ -42,18 +38,15 @@ export class Gameboard {
                 player.woundedPossibleCoordinates.length = 0;
                 playSunk();
                 this.battlefield[x][y] = 'X';
-                // return this.checkGameOver() 
                 let result = this.checkGameOver() === 'gameover' ? 'gameover' : 'X';
                 return result;
             }
             player.targetIsSunk = false
-            // console.log('ship type=',ship.type,'ship.hits=', ship.hits, 'sunk=',ship.sunk)
             return this.battlefield[x][y] = 'X';
         }
     }
 
     blockSurroundingCells(ship) {
-        // console.log(`ship=${ship.type}, ship.sunk = ${ship.sunk}, ship.coordinates = ${ship.coordinates}`);
         ship.coordinates.forEach(arr => {
             let [x,y] = arr
             if (x + 1 < 10 && this.battlefield[x + 1][y] === '-') this.battlefield[x + 1][y] = 'B';
@@ -69,14 +62,12 @@ export class Gameboard {
     }
 }
 
-
 function startPointGenerator(battlefield, ship) {
     const x = Math.floor(Math.random()*10);
     const y = Math.floor(Math.random()*10);
     if (battlefield[x][y] === '-') {
         checkBeforePlacement(x,y,ship,battlefield)
-    }
-    else {
+    } else {
         startPointGenerator(battlefield, ship); 
     }
 }
@@ -97,8 +88,7 @@ function checkBeforePlacement(x,y,ship, battlefield) {
                     ship.coordinates.push([x,y + i])
                 }
                 return  
-            }
-            else {
+            } else {
                 return startPointGenerator(battlefield, ship);
             }
         }
@@ -114,8 +104,7 @@ function checkBeforePlacement(x,y,ship, battlefield) {
                     ship.coordinates.push([x,y - i])
                 }
                 return  
-            }
-            else {
+            } else {
                 return startPointGenerator(battlefield, ship);
             }
         } 
@@ -134,8 +123,7 @@ function checkBeforePlacement(x,y,ship, battlefield) {
                     ship.coordinates.push([x + i,y])
                 }
                 return  
-            }
-            else {
+            } else {
                 return startPointGenerator(battlefield, ship);
             }
         }
@@ -152,8 +140,7 @@ function checkBeforePlacement(x,y,ship, battlefield) {
                     ship.coordinates.push([x - i,y])
                 }
                 return  
-            }
-            else {
+            } else {
                 return startPointGenerator(battlefield, ship);
             }
         }

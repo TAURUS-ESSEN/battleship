@@ -49,7 +49,7 @@ function startGame() {
     showTurnMessage();
     if (!currentGame.currentPlayer.isHuman) {
         player2Board.classList.add('disabled');
-        setTimeout(() => playTurn(currentGame), 5000);
+        setTimeout(() => playTurn(currentGame), 2000);
     } 
     else {
         playTurn(currentGame);
@@ -81,11 +81,6 @@ function drawPlayer1Board(battlefield = '') {
                 cell.classList.add('empty');
                 if( battlefield !=='')
                 { 
-                    if (typeof(battlefield[i][j]) === 'object') {
-                        if (battlefield[i][j].type === 'submarine') {
-                            cell.classList.remove('empty');
-                        }   
-                    } 
                     if (battlefield[i][j] ==='-') {
                     } 
                     if ((typeof(battlefield[i][j]) !== 'object') && (battlefield[i][j] !=='-')) {
@@ -125,7 +120,7 @@ function drawPlayer2Board(battlefield = '') {
                             cell.classList.add('hit');
                         }
                     } else {
-                        cell.textContent = '' 
+                        // cell.textContent = '' 
                     }
                 }
                 string.appendChild(cell)

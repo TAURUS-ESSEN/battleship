@@ -9,7 +9,8 @@ function createFleet() {
         new Ship("linkor", 4),
         new Ship("crusader1", 3),
         new Ship("crusader2", 3),
-        new Ship("submarine", 2),
+        new Ship("submarine1", 2),
+        new Ship("submarine2", 2),
         new Ship("mine1", 1),
         new Ship("mine2", 1),
     ];

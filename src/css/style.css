@@ -1,7 +1,9 @@
 :root {
     --color1:#080874;
     --color2: #3333c1;
+    --color3: #ff0000;
     --main-textcolor: var(--color1);
+    --text-hover: var(--color3);
 }
 
 * {
@@ -27,6 +29,10 @@ body {
 header {
     width: 100%;
     height: 20px;
+    display: flex;
+    justify-content: center;
+    padding-top: 1em;
+
 }
 
 footer {
@@ -38,7 +44,8 @@ footer {
     font-size: 2rem;
     padding-top: 1.5em;
     justify-content: center;
-    color: var(--color1)
+    color: var(--color1);
+    text-shadow: 0 0 1px rgba(245, 10, 10, 0.608);
 }
 
 input {
@@ -83,10 +90,9 @@ button {
     display: none;
 }
 
-
 button:hover {
     transform: scale(1.1);
-    color: red;
+    color: var(--text-hover);
     cursor: pointer;
 }
 
@@ -99,7 +105,6 @@ main {
 }
 
 .player1NameArea {
-    /* margin-bottom: 0.6em; */
     display: flex;
     align-items: center;
     justify-content:center ;
@@ -111,13 +116,12 @@ main {
     flex-direction: column;
 }
 
-
 .player2Name {
     display: flex;
     align-items: center;
     justify-content:center ;
     font-size: 1.7em;
-    color: rgb(8, 8, 116);
+    color: var(--main-textcolor)
 }
 
 .player2Name img {
@@ -131,23 +135,14 @@ main {
 }
 
 .player1Name {
-    /* display: flex; */
-    /* width: 100%; */
-    /* align-items: center; */
-    /* justify-content:center ; */
-    font-size: 1.7em;
-    color: rgb(8, 8, 116);
     display: none;
-    /* position: relative; */
+    font-size: 1.7em;
+    color: var(--main-textcolor);
 }
 
 .player1Name img {
-    /* position: absolute; */
     display: inline-block;
     width: 110px;
-    /* left: -80px; */
-    /* bottom: -10px; */
-    /* padding-right: 1em; */
 }
 
 .playerBoard{
@@ -158,23 +153,23 @@ main {
 
 .playerBoard > div {
     display: flex;
-    width: 100%;
+    /* width: 100%; */
     transition: 0.5s;
 }
 
 .playerBoard > div div {
     width: 55px;
     height: 55px;
-    border: 1px solid rgba(22, 117, 185, 0.905);
     display: flex;
     justify-content: center;
     align-items: center;
+    border: 1px solid rgba(22, 117, 185, 0.905);
     overflow: hidden;  
     transition: 0.5s;
 }
 
 #player2Board > div div:hover {
-    background-image: url('../img/target2.png');
+    background-image: url('../img/target.png');
 }
 
 .disabled {
@@ -182,25 +177,31 @@ main {
 }
 
 .empty {
-    background-image: url('../img/empty6.png');
-    background-color: rgb(255, 255, 255);
+    background-image: url('../img/empty.png');
     background-size: contain;
     opacity: 1;
 }
 
 .miss {
-    background-image: url('../img/miss3.png');
+    background-image: url('../img/miss.png');
     background-size: contain;
     opacity: 1;
     pointer-events: none;
 }
 
 .hit {
-    background-image: url('../img/hit3.png');
+    background-image: url('../img/fire3.png');
     background-size: contain;
-    opacity: 1;
     z-index: 999;
-    opacity: 0.8    ;
+    opacity: 1;
+    pointer-events: none;
+}
+
+.sunk {
+    background-image: url('../img/hit.png');
+    background-size: contain;
+    z-index: 999;
+    opacity: 1    ;
     pointer-events: none;
 }
 
@@ -210,24 +211,24 @@ main {
 
 .ship {
     background-size: cover;
+    /* background-color: rgba(255, 255, 255, 0.804); */
     position: absolute;
     z-index: 10;
     border: 1px solid rgba(22, 117, 185, 0.905);
 }
 
-.submarine {
-    background-image: url('../img/submarine3.png');
-    height: 110px;
-    width: 55px;
+.submarine1, .submarine2 {
+    background-image: url('../img/submarine7.png');
+    /* background-color: rgba(255, 255, 255, 0.763); */
 }
 .crusader1, .crusader2 {
-    background-image: url('../img/crusader3.png');
+    background-image: url('../img/crusader4.png');
 }
 .mine1, .mine2 {
     background-image: url('../img/mine2.png');
 }
 .linkor {
-    background-image: url('../img/aircraft.png');
+    background-image: url('../img/aircraft6.png');
 }
 
 .rotate90 {
@@ -241,7 +242,7 @@ main {
 }
 
 .gameover {
-    color: red;
+    color: var(--text-hover);
 }
 
 .decoShip {
@@ -254,7 +255,6 @@ main {
     display: block;
     width: 190px;
 }
-
 
 .decoAnker {
     position: absolute;
@@ -287,6 +287,6 @@ main {
 }
 
 .error::placeholder  {
-    color:red;
+    color: var(--color3);
     font-size: 0.8em;
 }
