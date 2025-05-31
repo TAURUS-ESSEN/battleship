@@ -1,9 +1,11 @@
 'use strict';
 import { initializeGame, playTurn } from "./index.js";
+import { soundOn, toggleSound } from "./sounds.js";
 
 const player1NameInput = document.getElementById('player1NameInput');
 const startButton = document.getElementById('startGame');
 const restartButton = document.getElementById('restartGame');
+const soundButton = document.getElementById('soundButton')
 
 const gameScreen = document.getElementById('gameScreen') 
 const player1Name = document.getElementById('player1Name');  
@@ -20,6 +22,7 @@ startButton.addEventListener('click', () => {
     if (player1NameInput.value !=='') { startGame(); } 
     else { player1NameInput.classList.add("error");}
 })
+
 restartButton.addEventListener('click', resetGame);
 
 player2Board.addEventListener("click", (event) => {
@@ -27,6 +30,12 @@ player2Board.addEventListener("click", (event) => {
     let y = Number(event.target.dataset.y);
     attackEnemy(x, y );
 })
+
+soundButton.addEventListener('click', () => {
+    toggleSound();
+    soundButton.classList.toggle("soundButtonOff");
+})
+
 
 function attackEnemy(x,y) {
     if (!currentGame || Number.isNaN(x) || Number.isNaN(y)) return;
@@ -159,18 +168,19 @@ export function gameOver() {
 
 function resetGame() {
     turnMessage.classList.remove('gameover'); 
-    turnMessage.textContent = '';
+    turnMessage.textContent = 'Enter your name and press Start button to play';
     drawBoard(player1Board);
     drawBoard(player2Board);
     currentGame = null;
     player1NameInput.value = '';
-    disablePlayer2Board()
+    disablePlayer2Board();
     clearTimeout(activeTimeoutId);
     activeTimeoutId = null;
     gameScreen.style.display = 'none';
     startScreen.style.display = 'block';
     restartButton.style.display = 'none';
-    player1NameInput.classList.remove("error")
+    player1NameInput.classList.remove("error");
+    // soundOn = true;
 } 
 
 function disablePlayer2Board() {

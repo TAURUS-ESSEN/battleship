@@ -60,6 +60,24 @@ input {
     margin-right: 0.5em;
 }
 
+.soundButtonOn {
+    position: absolute;
+    right: 40px;
+    background-image: url('../img/soundOn.png');
+    width:70px;
+    height: 70px;
+    
+}
+
+.soundButtonOff {
+    position: absolute;
+    right: 40px;
+    background-image: url('../img/soundOff.png');
+    width:70px;
+    height: 70px;
+}
+
+
 input::placeholder {
     font-size: 0.8em;
     color: var(--main-textcolor);
@@ -77,6 +95,7 @@ button {
     background-color: transparent;
     background-size: cover;
     background-repeat: no-repeat;
+        z-index: 1;
     transition: 0.5s ;
 }
 
@@ -150,6 +169,7 @@ main {
     max-width: 700px;
     position: relative;
     box-shadow: 0 0 8px rgba(85, 85, 85, 0.755);
+    z-index: 1;
     transition: 0.5s;
 }
 
@@ -274,7 +294,7 @@ main {
 .decoPirate {
     position: absolute;
     left: 0;
-    bottom: 50%;
+    top: 0;
 }
 .decoPirate img {
     display: block;
@@ -284,4 +304,26 @@ main {
 .error::placeholder  {
     color: var(--color3);
     font-size: 0.8em;
+}
+
+@media (min-width: 1920px)  {
+    
+    .decoShip img, .decoAnker img , .decoIlluminator img, .decoPirate img{
+        width: 100%;
+    }
+    .decoPirate {
+        left: 2em;
+    }
+    .decoPirate img {
+        display: block;
+        width: 250px;
+    }
+
+    footer {
+        padding-top: 5em;
+    }
+
+    .decoIlluminator {
+    right: 2em;
+}
 }
