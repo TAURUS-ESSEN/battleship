@@ -14,9 +14,9 @@
 
 @font-face {
             font-family: Sketchetik;
-            /* src: url('../Fonts/Sketchetik-Bold.ttf') format('truetype'); */
-            src: url('../Fonts/SketchSerif-Regular.ttf') format('truetype');
-            /* src: url('../Fonts/Sketch\ Fine\ Serif.woff') format('woff'); */
+            /* src: url('../fonts/Sketchetik-Bold.ttf') format('truetype'); */
+            src: url('../fonts/SketchSerif-Regular.ttf') format('truetype');
+            /* src: url('../fonts/Sketch\ Fine\ Serif.woff') format('woff'); */
             font-display: swap;
         }
 
@@ -63,7 +63,7 @@ input {
 .soundButtonOn {
     position: absolute;
     right: 40px;
-    background-image: url('../img/soundOn.png');
+    background-image: url('../img/soundOn.webp');
     width:70px;
     height: 70px;
     
@@ -72,7 +72,7 @@ input {
 .soundButtonOff {
     position: absolute;
     right: 40px;
-    background-image: url('../img/soundOff.png');
+    background-image: url('../img/soundOff.webp');
     width:70px;
     height: 70px;
 }

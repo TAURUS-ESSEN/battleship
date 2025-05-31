@@ -1,4 +1,8 @@
 'use strict';
+import soundMiss from './audio/miss.mp3';
+import soundHit from './audio/hit.mp3';
+import soundSunk from './audio/sunk.mp3';
+
 export let soundOn = true;
 
 export function toggleSound() {
@@ -8,16 +12,16 @@ export function toggleSound() {
 }
 
 export function playMiss() {
-    const soundMiss = new Audio('./audio/miss.mp3');
-    if (soundOn) soundMiss.play();
+    const sound = new Audio(soundMiss);
+    if (soundOn) sound.play();
 }
 
 export function playHit() {
-    const soundHit = new Audio('./audio/hit.mp3');
-    if (soundOn) soundHit.play();
+    const sound = new Audio(soundHit);
+    if (soundOn) sound.play();
 }
 
 export function playSunk() {    
-    const soundHit = new Audio('./audio/sunk.mp3');
-    if (soundOn) soundHit.play();
+    const sound = new Audio(soundSunk);
+    if (soundOn) sound.play();
 }

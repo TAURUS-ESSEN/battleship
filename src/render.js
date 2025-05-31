@@ -1,6 +1,7 @@
 'use strict';
 import { initializeGame, playTurn } from "./index.js";
-import { soundOn, toggleSound } from "./sounds.js";
+import { toggleSound } from "./sounds.js";
+import './css/style.css';
 
 const player1NameInput = document.getElementById('player1NameInput');
 const startButton = document.getElementById('startGame');
@@ -180,7 +181,6 @@ function resetGame() {
     startScreen.style.display = 'block';
     restartButton.style.display = 'none';
     player1NameInput.classList.remove("error");
-    // soundOn = true;
 } 
 
 function disablePlayer2Board() {
