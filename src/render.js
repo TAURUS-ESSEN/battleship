@@ -29,11 +29,14 @@ player2Board.addEventListener("click", (event) => {
 })
 
 function attackEnemy(x,y) {
-    if (Number.isNaN(x)) { return }
-    currentGame.player1.attack([x,y]);
+    if (!currentGame || Number.isNaN(x) || Number.isNaN(y)) return;
+    const result = currentGame.player1.attack([x, y])
     drawBoard(player2Board, currentGame.player2.board.battlefield, true);
+    if (result === 'gameover') {
+        return gameOver(); 
+    }
     if (currentGame.player1.enemyBoard.battlefield[x][y] !== 'X') {
-        player2Board.classList.add('disabled');
+        disablePlayer2Board();
         currentGame.currentPlayer = currentGame.currentPlayer === currentGame.player2 ? currentGame.player1 : currentGame.player2;
     }
     showTurnMessage();
@@ -48,7 +51,7 @@ function startGame() {
     drawBoard(player2Board, currentGame.player2.board.battlefield, true);
     showTurnMessage();
     if (!currentGame.currentPlayer.isHuman) {
-        player2Board.classList.add('disabled');
+        disablePlayer2Board();
         setTimeout(() => playTurn(currentGame), 2000);
     } else {
         playTurn(currentGame);
@@ -73,7 +76,7 @@ function showTurnMessage() {
 
 function drawBoard(playerBoard, battlefield = '', isClickable= false) {
     playerBoard.textContent = '';
-    if (isClickable) { playerBoard.classList.remove('disabled');}
+    if (isClickable) { enablePlayer2Board();}
         
     for (let i = 0; i <= 9; i++) {
     const row = document.createElement('div');
@@ -148,7 +151,7 @@ export function gameOver() {
     drawBoard(player2Board, currentGame.player2.board.battlefield, true);
     drawShips();
     currentGame.isOver = true;
-    player2Board.classList.add('disabled');
+    disablePlayer2Board();
     turnMessage.classList.add('gameover');
     turnMessage.textContent = `Game Over. ${currentGame.currentPlayer.name} wins`;
     return
@@ -161,7 +164,7 @@ function resetGame() {
     drawBoard(player2Board);
     currentGame = null;
     player1NameInput.value = '';
-    player2Board.classList.add('disabled');
+    disablePlayer2Board()
     clearTimeout(activeTimeoutId);
     activeTimeoutId = null;
     gameScreen.style.display = 'none';
@@ -169,6 +172,13 @@ function resetGame() {
     restartButton.style.display = 'none';
     player1NameInput.classList.remove("error")
 } 
+
+function disablePlayer2Board() {
+    player2Board.classList.add('disabled');
+}
+function enablePlayer2Board() {
+    player2Board.classList.remove('disabled');
+}
 
 drawBoard(player1Board);
 drawBoard(player2Board);

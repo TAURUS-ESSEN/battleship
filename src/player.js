@@ -37,7 +37,7 @@ export class Player {
         if (this.woundedPossibleCoordinates.length === 0) {
             findWoundedPossibleCoordinates(x,y,this.enemyBoard, this.woundedPossibleCoordinates)
         } 
-        console.log(this.woundedPossibleCoordinates[0]);
+        console.log('в следующий ход', this.woundedPossibleCoordinates[0]);
         [this.targetX, this.targetY] = this.woundedPossibleCoordinates[0];
         this.woundedPossibleCoordinates.shift() 
         return this.enemyBoard.receiveAttack(this.targetX, this.targetY, this);
@@ -74,7 +74,7 @@ function findWoundedPossibleCoordinates(x,y, enemyBoard, woundedPossibleCoordina
             if ((y < 9) && ( enemyBoard.battlefield[x][y+1] !== 'M')  &&  ( enemyBoard.battlefield[x][y+1] !== 'B') &&  ( enemyBoard.battlefield[x][y+1] !== 'X') ) {
                 woundedPossibleCoordinates.push([x,y+1])           
             }
-            if  ((y > 0) && ( enemyBoard.battlefield[x][y-1] !== 'M')  &&  ( enemyBoard.battlefield[x][y-1] !== 'B')  &&  ( enemyBoard.battlefield[x][y-1] !== 'B')) {
+            if  ((y > 0) && ( enemyBoard.battlefield[x][y-1] !== 'M')  &&  ( enemyBoard.battlefield[x][y-1] !== 'B')  &&  ( enemyBoard.battlefield[x][y-1] !== 'X')) {
                 woundedPossibleCoordinates.push([x,y-1])           
             }
     return  

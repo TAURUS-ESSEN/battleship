@@ -14,10 +14,7 @@ export class Gameboard {
     }
 
     checkGameOver() {
-        const notAllSunk = this.fleet.some(ship=> ship.sunk===false);
-        if (!notAllSunk) {
-            return 'gameover'
-        }
+        return this.fleet.every(ship => ship.sunk);
     } 
 
     receiveAttack(x, y, player) {
@@ -38,8 +35,7 @@ export class Gameboard {
                 player.woundedPossibleCoordinates.length = 0;
                 playSunk();
                 this.battlefield[x][y] = 'X';
-                let result = this.checkGameOver() === 'gameover' ? 'gameover' : 'X';
-                return result;
+                return this.checkGameOver() ? 'gameover' : 'X';
             }
             player.targetIsSunk = false
             return this.battlefield[x][y] = 'X';
