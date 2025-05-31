@@ -1,4 +1,5 @@
 # 🛳️ Battleship — Notebook Edition
+ [Demo link](https://taurus-essen.github.io/battleship/) 
 
 A browser-based version of the classic Battleship game, created as part of [The Odin Project](https://www.theodinproject.com/lessons/node-path-javascript-battleship). This implementation uses vanilla JavaScript, modular architecture, and features a unique hand-drawn notebook-style design.
 
